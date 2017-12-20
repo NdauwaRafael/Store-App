@@ -1,0 +1,32 @@
+.body-full-firstpage {
+min-height: 100vh;
+background: url('/img/store-bg.jpg');
+background-position: center;
+background-size: cover;
+background-color: #eeeeee;
+
+.overlay-top {
+  background: rgba(192,192,192,0.9);
+  min-height: 100vh;
+
+  .padded-overlay{
+    padding-top:20%;
+    text-align: center;
+  }
+  .login-area{
+    margin-top: 50%;
+    h3{
+      text-align: center;
+      color: #3e2723;
+    }
+    .login-form {
+      padding: 20px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+      background: rgba(0, 0, 0, 0.3);
+
+    }
+  }
+
+}
+}

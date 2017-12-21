@@ -9,7 +9,7 @@
 }
 
 .body-full-firstpage .overlay-top {
-  background: rgba(192, 192, 192, 0.9);
+  background: rgba(20, 20, 19, 0.9);
   min-height: 100vh;
 }
 
@@ -32,6 +32,62 @@
   border: 1px solid #cccccc;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.3);
+}
+
+.home-backgound .left-nav {
+  background: url("/img/nav-bg.png");
+  min-height: 100vh;
+  -webkit-box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.home-backgound .left-nav h4 {
+  color: #eeeeee;
+  text-align: center;
+}
+
+.home-backgound .left-nav .ovetop {
+  background: rgba(255, 255, 255, 0.8);
+  min-height: 100vh;
+}
+
+.home-backgound .left-nav .ovetop ul {
+  padding-top: 12%;
+  margin-left: 5%;
+}
+
+.home-backgound .left-nav .ovetop ul li {
+  display: block;
+  margin-before: 1em;
+  margin-after: 1em;
+  margin-start: 2em;
+  margin-end: 2em;
+  padding-top: 40px;
+}
+
+.home-backgound .left-nav .ovetop ul li a {
+  color: #757575;
+  font-size: 1.3em;
+}
+
+.home-backgound .home-body {
+  background: #EEEEEE;
+  position: relative;
+  float: right;
+  width: calc(100% - 260px);
+}
+
+.home-backgound .home-body .mynav {
+  width: 100%;
+}
+
+.home-backgound h4 {
+  color: #eeeeee;
+  text-align: center;
 }
 
 /**

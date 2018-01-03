@@ -4,8 +4,8 @@
       <div class="overlay-top">
         <div class="grid-container">
           <div class="grid-x">
-            <div class="large-auto cell"></div>
-            <div class="large-auto cell">
+            <div class="large-2 cell"></div>
+            <div class="large-8 cell">
               <div class="login-area">
                 <h3>LOGIN</h3>
                 <form>
@@ -24,7 +24,9 @@
 
                       <div class="medium-12 cell">
                         <button type="button" @click="login()" class="success button">Sign In</button>
-                        <el-button type="text" icon="el-icon-d-arrow-left">Go to Start</el-button>
+                        <router-link :to="{ path: '/' }">
+                          <el-button type="text" icon="el-icon-d-arrow-left">Go to Start</el-button>
+                        </router-link>
                       </div>
                     </div>
                   </div>
@@ -32,7 +34,7 @@
               </div>
 
             </div>
-            <div class="large-auto cell"></div>
+            <div class="large-2 cell"></div>
           </div>
         </div>
   </div>
@@ -50,8 +52,8 @@ export default {
   data(){
     return {
       loginForm: {
-        email: '',
-        password: ''
+        email: 'rkaranja@cytonn.com',
+        password: 'password'
       }
     }
   },
@@ -60,7 +62,10 @@ export default {
       this.$message({
         message: 'Congrats, this is a success message.',
         type: 'success'
-      });      
+      });
+
+      // this.$router.push('/home');
+      this.$http.post(loginURL);
     }
   }
 }

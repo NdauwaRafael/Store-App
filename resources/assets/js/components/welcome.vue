@@ -8,7 +8,9 @@
             <div class="cell small-8">
 
               <h3>Organize Your Store Like A Pro</h3>
-              <a class="button alert" href="#">Get Started</a>
+              <router-link :to="{ path: '/login' }">
+                <a class="button alert">Get Started</a>
+              </router-link>
             </div>
             <div class="cell small-2"></div>
           </div>

@@ -59334,27 +59334,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
   name: 'itemList',
   data: function data() {
     return {
-      // tableData: [{
-      //   date: '2016-05-03',
-      //   name: 'Tom',
-      //   address: 'No. 189, Grove St, Los Angeles',
-      //   tag: 'Home'
-      // }, {
-      //   date: '2016-05-02',
-      //   name: 'Tom',
-      //   address: 'No. 189, Grove St, Los Angeles',
-      //   tag: 'Office'
-      // }, {
-      //   date: '2016-05-04',
-      //   name: 'Tom',
-      //   address: 'No. 189, Grove St, Los Angeles',
-      //   tag: 'Home'
-      // }, {
-      //   date: '2016-05-01',
-      //   name: 'Tom',
-      //   address: 'No. 189, Grove St, Los Angeles',
-      //   tag: 'Office'
-      // }]
+      outerVisible: false,
+      innerVisible: false,
+      editItemsList: {
+        name: '',
+        category: '',
+        quantity: '',
+        price: '',
+        description: '',
+        id: ''
+      }
     };
   },
 
@@ -59364,6 +59353,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     filterTag: function filterTag(value, row) {
       return row.tag === value;
+    },
+    handleEdit: function handleEdit(index, row) {
+      console.log(index, row);
+      this.editItemsList.name = row.name;
+      this.editItemsList.category = row.category;
+      this.editItemsList.quantity = row.quantity;
+      this.editItemsList.price = row.price;
+      this.editItemsList.description = row.description;
+      this.editItemsList.id = row.id;
+
+      this.outerVisible = true;
     }
   },
   computed: {
@@ -59371,6 +59371,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       return this.$store.getters.storeItems;
     }
   }
+
 });
 
 /***/ }),
@@ -59387,13 +59388,24 @@ var render = function() {
     [
       _c(
         "el-table",
-        {
-          staticStyle: { width: "100%" },
-          attrs: { data: _vm.storeItemsList, index: _vm.index }
-        },
+        { staticStyle: { width: "100%" }, attrs: { data: _vm.storeItemsList } },
         [
           _c("el-table-column", {
-            attrs: { prop: "name", label: "Item Name", sortable: "" }
+            attrs: { prop: "index", label: "#" },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(scope) {
+                  return [
+                    _vm._v("\n        " + _vm._s(scope.$index + 1) + "\n      ")
+                  ]
+                }
+              }
+            ])
+          }),
+          _vm._v(" "),
+          _c("el-table-column", {
+            attrs: { prop: "name", label: "Item Name" }
           }),
           _vm._v(" "),
           _c("el-table-column", {
@@ -59411,7 +59423,18 @@ var render = function() {
                 key: "default",
                 fn: function(scope) {
                   return [
-                    _c("el-tag", { attrs: { type: "info" } }, [_vm._v("Edit")])
+                    _c(
+                      "el-button",
+                      {
+                        attrs: { plain: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.handleEdit(scope.$index, scope.row)
+                          }
+                        }
+                      },
+                      [_vm._v("Edit")]
+                    )
                   ]
                 }
               }
@@ -59433,6 +59456,267 @@ var render = function() {
               }
             ])
           })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "el-dialog",
+        {
+          attrs: { title: "Outter Dialog", visible: _vm.outerVisible },
+          on: {
+            "update:visible": function($event) {
+              _vm.outerVisible = $event
+            }
+          }
+        },
+        [
+          _c("form", [
+            _c("div", { staticClass: "grid-container" }, [
+              _c("div", { staticClass: "grid-x grid-padding-x" }, [
+                _c("div", { staticClass: "medium-6 cell" }, [
+                  _c("label", [
+                    _vm._v("Item Name\n              "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editItemsList.name,
+                          expression: "editItemsList.name"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Item Name" },
+                      domProps: { value: _vm.editItemsList.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editItemsList,
+                            "name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "medium-6 cell" }, [
+                  _c("label", [
+                    _vm._v("Input Category\n              "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editItemsList.category,
+                          expression: "editItemsList.category"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Item Category" },
+                      domProps: { value: _vm.editItemsList.category },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editItemsList,
+                            "category",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "grid-x grid-padding-x" }, [
+                _c("div", { staticClass: "medium-6 cell" }, [
+                  _c("label", [
+                    _vm._v("Item Quantity\n              "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editItemsList.quantity,
+                          expression: "editItemsList.quantity"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Item Quantity" },
+                      domProps: { value: _vm.editItemsList.quantity },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editItemsList,
+                            "quantity",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "medium-6 cell" }, [
+                  _c("label", [
+                    _vm._v("Input Price\n              "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editItemsList.price,
+                          expression: "editItemsList.price"
+                        }
+                      ],
+                      attrs: { type: "text", placeholder: "Input Price" },
+                      domProps: { value: _vm.editItemsList.price },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editItemsList,
+                            "price",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "grid-x grid-padding-x" }, [
+                _c("div", { staticClass: "medium-12 cell" }, [
+                  _c("label", [
+                    _vm._v("Item Description\n              "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.editItemsList.description,
+                          expression: "editItemsList.description"
+                        }
+                      ],
+                      attrs: { placeholder: "Item Description", rows: "6" },
+                      domProps: { value: _vm.editItemsList.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.editItemsList,
+                            "description",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "el-dialog",
+            {
+              attrs: {
+                width: "30%",
+                title: "Inner Dialog",
+                visible: _vm.innerVisible,
+                "append-to-body": ""
+              },
+              on: {
+                "update:visible": function($event) {
+                  _vm.innerVisible = $event
+                }
+              }
+            },
+            [
+              _c("h3", [
+                _c("i", { staticClass: "el-icon-loading" }),
+                _vm._v(" Are you Sure you want to change the Item details?")
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dialog-footer",
+                  attrs: { slot: "footer" },
+                  slot: "footer"
+                },
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { type: "info" },
+                      on: {
+                        click: function($event) {
+                          _vm.innerVisible = false
+                        }
+                      }
+                    },
+                    [_vm._v("Cancel")]
+                  ),
+                  _vm._v(" "),
+                  _c("el-button", { attrs: { type: "success" } }, [
+                    _vm._v("Proceed")
+                  ])
+                ],
+                1
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dialog-footer",
+              attrs: { slot: "footer" },
+              slot: "footer"
+            },
+            [
+              _c(
+                "el-button",
+                {
+                  on: {
+                    click: function($event) {
+                      _vm.outerVisible = false
+                    }
+                  }
+                },
+                [_vm._v("Cancel")]
+              ),
+              _vm._v(" "),
+              _c(
+                "el-button",
+                {
+                  attrs: { type: "success" },
+                  on: {
+                    click: function($event) {
+                      _vm.innerVisible = true
+                    }
+                  }
+                },
+                [_vm._v("Update Item Details")]
+              )
+            ],
+            1
+          )
         ],
         1
       )

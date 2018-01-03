@@ -1,0 +1,96 @@
+.home-backgound {
+  .left-nav {
+    background: url("/img/n-bg.png");
+    background-position: center;
+    background-size: cover;
+    // background: #76ff03;
+    min-height: 100vh;
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    //position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    h4{
+      color: #eeeeee;
+      text-align: center;
+    }
+  .ovetop {
+    background: rgba(255, 255, 255, 1);
+    min-height: 100vh;
+
+    ul {
+      padding-top: 12%;
+      margin-left: 10%;
+
+      li{
+        display: block;
+        margin-before: 1em;
+        margin-after: 1em;
+        margin-start: 2em;
+        // margin-end: 2em;
+        padding-top: 40px;
+
+        a{
+          color: #00695c;
+          font-size: 24px;
+          font-weight: 100;
+
+        }
+
+        .active {
+          padding: 10px;
+          background: #e1e1e1;
+          border-radius: 5px;
+          box-shadow: 5px 2px 10px 1px grey;
+
+
+        }
+      }
+    }
+  }
+  }
+
+  .home-body {
+    background: #EEEEEE;
+    position: relative;
+    float: right;
+    width: calc(100% - 260px);
+    .mynav {
+      width: 100%;
+
+    }
+  }
+
+
+  h4{
+    color: #eeeeee;
+    text-align: center;
+  }
+}
+
+
+
+.mynav {
+  padding-top: 2%;
+  margin-bottom: 5%;
+  background: #fff;
+  border-bottom: dashed 2px #ccc;
+  box-shadow: 5px 2px 10px 1px grey;
+
+.left-top-home{
+  display: flex;
+  justify-content: space-between;
+  .search {
+    width: 70%;
+  }
+
+  .settings {
+    width: 20%;
+    font-size: 30px;
+    color: #757575 ;
+
+  }
+}
+
+}

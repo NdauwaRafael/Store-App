@@ -8,6 +8,7 @@
 require('./bootstrap');
 import  Vue from 'vue';
 import router from './router';
+import store from './store';
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
@@ -23,5 +24,6 @@ Vue.component('home', require('./home.vue'));
 
 new Vue({
     el: '#app',
-    router
+    router,
+    store
 });

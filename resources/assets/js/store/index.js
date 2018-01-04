@@ -4,18 +4,21 @@ CREATED BY RAPHAEL KARANJA
 import Vue from 'vue';
 import Vuex from 'vuex';
 import vuejsStorage from 'vuejs-storage'
+import updateItemInArray from 'array-update-item'
 
 Vue.use(Vuex);
 Vue.use(vuejsStorage);
 
 const state = {
-  storeItems:[],
+  storage: {
+    storeItems:[],
+  }
 
 }
 
 const getters = {
 storeItems:state =>{
-  return state.storeItems;
+  return state.storage.storeItems;
 }
 }
 
@@ -23,14 +26,26 @@ storeItems:state =>{
 const mutations = {
   /*------registering Items to local storage-----*/
   ADD_ITEM(state, itms){
-    state.storeItems.push(itms);
+
+      state.storage.storeItems.push(itms);
+
   },
   EDIT_ITEM(state, itm){
+    var id = itm.id;
+
+    if (delete itm.id) {
+      state.storage.storeItems[id] = itm
+    }
 
   },
 
-  REMOVE_TODO(state, itm){
-
+  REMOVE_ITEM(state, itm){
+    console.log(itm);
+    if (state.storage.storeItems.splice(itms,1)) {
+      return true;
+    }else {
+      return false;
+    }
   }
 
   }
@@ -42,10 +57,10 @@ const actions = {
       addItem({commit}, itms){
         commit('ADD_ITEM', itms)
       },
-      editTodo({commit}, itm){
-        commit('EDIT_ITEM', itm)
+      editItem({commit}, itm, index){
+        commit('EDIT_ITEM', itm, index)
       },
-      removeTodo({commit}, todo){
+      removeItem({commit}, itm){
         commit('REMOVE_ITEM', itm)
       }
 }

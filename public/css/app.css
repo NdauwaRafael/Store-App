@@ -55,6 +55,7 @@
 .home-backgound .left-nav .ovetop {
   background: white;
   min-height: 100vh;
+  bottom: 0;
 }
 
 .home-backgound .left-nav .ovetop ul {

@@ -6,10 +6,13 @@
           <h4>Store App</h4>
           <ul >
             <li>
-              <a >
-                <i class="el-icon-menu"></i>
-                <span>Dashboard</span>
-              </a>
+              <router-link :to="{ path: '/dashboard' }">
+                <a >
+                  <i class="el-icon-menu"></i>
+                  <span>Dashboard</span>
+                </a>
+              </router-link>
+
             </li>
 
             <li>
@@ -36,7 +39,7 @@
             <li>
               <router-link :to="{ name: 'itemList' }">
                 <a>
-                  <i class="el-icon-info"></i>
+                  <i class="el-icon-plus"></i>
                   <span>Add Store Manager</span>
                 </a>
               </router-link>

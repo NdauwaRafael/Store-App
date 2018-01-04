@@ -3,22 +3,24 @@
 export default {
   name: 'addItem',
 
-storage: {
-  data:{
 
-      items: {
-        name: '',
-        category: '',
-        quantity: '',
-        price: '',
-        description: ''
-      }
+  data(){
 
+return {
+  items: {
+    name: '',
+    category: '',
+    quantity: '',
+    price: '',
+    description: ''
   }
+}
+
 },
   methods: {
     registerItem(){
-      this.$store.dispatch('addItem', this.items)
+      this.$store.dispatch('addItem', this.items);
+      this.$router.push('/itemList')
     }
   },
   computed: {

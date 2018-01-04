@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Welcome from '../components/welcome'
 import Login from '../components/membership/login'
 import Home from '../components/home/home'
+import Dashboard from '../components/home/Dashboard'
 import AddItem from '../components/items/AddItem.vue'
 import ItemList from '../components/items/ItemList.vue'
 
@@ -36,6 +37,11 @@ const router = new VueRouter({
                 path: '/itemList',
                 component: ItemList,
                 name: 'itemList'
+              },
+              {
+                path: '/dashboard',
+                component: Dashboard,
+                name: 'Dashboard'
               }
           ]
       }

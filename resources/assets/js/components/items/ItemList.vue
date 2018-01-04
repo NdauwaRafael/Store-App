@@ -1,4 +1,5 @@
 <script>
+import { mapGetters } from 'vuex'
   export default {
     name: 'itemList',
     data() {
@@ -24,21 +25,56 @@
       },
 
       handleEdit(index, row) {
-        console.log(index, row);
+        console.log(index);
         this.editItemsList.name = row.name;
         this.editItemsList.category = row.category;
         this.editItemsList.quantity = row.quantity;
         this.editItemsList.price = row.price;
         this.editItemsList.description = row.description;
-        this.editItemsList.id = row.id;
+        this.editItemsList.id = index;
 
         this.outerVisible = true;
+      },
+      handleDelete(index){
+        this.$store.dispatch('removeItem', index)
+        .then((response)=>{
+          this.$message({
+            message: 'Item Deleted Successfully',
+            type: 'success'
+          });
+
+          this.$router.push('/itemList')
+        })
+        .catch((err)=>{
+          this.$message.error('Item Could not be Deleted An error occurred');
+          console.log(err);
+        })
+      },
+
+      updateItem(){
+        this.$store.dispatch('editItem', this.editItemsList, this.editItemsList.id)
+        .then((response)=>{
+          this.$message({
+            message: 'Item Updated Successfully',
+            type: 'success'
+          });
+          this.innerVisible = false;
+          this.outerVisible = false;
+
+          this.$router.push('/itemList')
+
+        })
+        .catch((err)=>{
+          this.$message.error('Item Could not be updated Successfully');
+          console.log(err);
+        })
+
       }
     },
     computed: {
-      storeItemsList(){
-        return this.$store.getters.storeItems;
-      }
+      ...mapGetters({
+        storeItemsList: 'storeItems'
+      })
     },
 
 
@@ -70,7 +106,13 @@
       <el-table-column
         prop="category"
         label="Item Category"
-        width="300">
+        width="150">
+      </el-table-column>
+
+      <el-table-column
+        prop="quantity"
+        label="Number of Items"
+        width="150">
       </el-table-column>
 
       <el-table-column
@@ -84,8 +126,8 @@
         label="Edit"
         width="120"
           >
-        <template slot-scope="scope">
-          <el-button plain @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+        <template slot-scope="edit">
+          <el-button plain @click="handleEdit(edit.$index, edit.row)">Edit </el-button>
         </template>
 
       </el-table-column>
@@ -95,8 +137,8 @@
         label="Delete"
         width="100"
           >
-        <template slot-scope="scope">
-          <el-tag type="danger">Delete</el-tag>
+        <template slot-scope="del">
+          <el-button plain type="danger" @click="handleDelete(del.$index)">Delete</el-button>
         </template>
 
       </el-table-column>
@@ -160,7 +202,7 @@
 
           <div slot="footer" class="dialog-footer">
             <el-button type="info" @click="innerVisible = false">Cancel</el-button>
-            <el-button type="success">Proceed</el-button>
+            <el-button type="success" @click="updateItem">Proceed</el-button>
           </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">

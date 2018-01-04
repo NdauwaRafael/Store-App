@@ -1,6 +1,12 @@
 .home-backgound {
+
+  .menu-toggle {
+    // visibility: hidden;
+    // font-weight: 200;
+  }
+
   .left-nav {
-    background: url("/img/n-bg.png");
+    // background: url("/img/n-bg.png");
     background-position: center;
     background-size: cover;
     // background: #76ff03;
@@ -12,14 +18,18 @@
     bottom: 0;
     left: 0;
     h4{
-      color: #eeeeee;
+      color: #00695c;
       text-align: center;
     }
   .ovetop {
     background: rgba(255, 255, 255, 1);
     min-height: 100vh;
     // height: auto;
+    z-index: 1;
+    //position: fixed;
+    top: 0;
     bottom: 0;
+    left: 0;
 
     ul {
       padding-top: 12%;
@@ -95,4 +105,30 @@
   }
 }
 
+}
+
+// @media screen and (min-width: 1024px) {
+//   .menu-toggle {
+//     visibility: visible;
+//     font-weight: 200;
+//   }
+//
+// }
+
+@media screen and (max-width: 1024px) {
+  .home-body {
+    width: 100% !important;
+  }
+
+  .itemList-component {
+    width: 100% !important;
+  }
+
+  .dashboard-component {
+    width: 100% !important;
+  }
+
+  .item-list {
+    width: 100% !important;
+  }
 }

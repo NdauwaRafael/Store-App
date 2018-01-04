@@ -1,5 +1,5 @@
 <template >
-  <div class="grid-container">
+  <div class="dashboard-component">
     <div class="grid-x">
         <div class="item-list" v-bind:class = "{'large-12': itemsnotavailable, 'large-8': itemsavailable }">
           <table>
@@ -22,17 +22,31 @@
                   <td >{{item.name}}</td>
                   <td >{{item.category}}</td>
                   <td >{{item.quantity}}</td>
-                  <td><el-button @click="cart(index)" size="small" type="danger" plain>Add to cart</el-button></td>
+                  <td><el-button @click="cart(index, item)" size="small" type="danger" plain>Add to cart</el-button></td>
                 </tr>
 
               </tbody>
             </table>
         </div>
 
-        <div class="basket" v-bind:class = "{ 'large-4': itemsavailable }">
-          <ul v-for="itm in basket.name">
-            <li >{{itm}}</li>
-          </ul>
+        <div class="basket" v-bind:class = "{ 'large-4': itemsavailable, 'cartHidden':itemsnotavailable }">
+
+
+          <table>
+            <thead>
+              <tr>
+                <th>Item Name</th>
+                <th>Item Quantity</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr v-for="basketItem in basketItems">
+                <td>{{basketItem.basket_item_name}}</td>
+                <td>{{basketItem.basket_item_quantity}}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
 
     </div>
@@ -40,12 +54,19 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "Dashboard",
   data(){
     return {
-      basket: [],
+      basketlist: {
+        name: '',
+        category: '',
+        quantity: '',
+        price: '',
+        description: '',
+        id: ''
+      },
       itemsnotavailable: true,
       itemsavailable: false
     }
@@ -53,16 +74,43 @@ export default {
 
   computed: {
     ...mapGetters({
-      storeItemsList: 'storeItems'
+      storeItemsList: 'storeItems',
+      basketItems: 'basketlist'
     })
+
+
   },
   methods: {
-    cart(id){
+    cart(id, item){
       this.itemsnotavailable = false
       this.itemsavailable = true
 
-      console.log(storeItemsList[id]);
-    }
+      this.basketlist.name = item.name;
+      this.basketlist.category = item.category;
+      this.basketlist.quantity = item.quantity;
+      this.basketlist.price = item.price;
+      this.basketlist.description = item.description;
+      this.basketlist.id = id;
+
+
+      this.$store.dispatch('addToBasket', this.basketlist)
+      .then((response)=>{
+        this.$message({
+          message: 'Item Added to the Basket',
+          type: 'success'
+        });
+
+      })
+      .catch((err)=>{
+        this.$message.error('Opps!! That was not supposed to happen');
+        console.log(err);
+      })
+
+
+    },
+    // ...mapActions([
+    //   'addToBasket'
+    // ])
   }
 }
 </script>

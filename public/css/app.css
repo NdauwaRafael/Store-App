@@ -35,7 +35,6 @@
 }
 
 .home-backgound .left-nav {
-  background: url("/img/n-bg.png");
   background-position: center;
   background-size: cover;
   min-height: 100vh;
@@ -48,14 +47,17 @@
 }
 
 .home-backgound .left-nav h4 {
-  color: #eeeeee;
+  color: #00695c;
   text-align: center;
 }
 
 .home-backgound .left-nav .ovetop {
   background: white;
   min-height: 100vh;
+  z-index: 1;
+  top: 0;
   bottom: 0;
+  left: 0;
 }
 
 .home-backgound .left-nav .ovetop ul {
@@ -127,6 +129,28 @@
   width: 20%;
   font-size: 30px;
   color: #757575;
+}
+
+@media screen and (max-width: 1024px) {
+  .home-body {
+    width: 100% !important;
+  }
+
+  .itemList-component {
+    width: 100% !important;
+  }
+
+  .dashboard-component {
+    width: 100% !important;
+  }
+
+  .item-list {
+    width: 100% !important;
+  }
+}
+
+.cartHidden {
+  visibility: hidden;
 }
 
 /**

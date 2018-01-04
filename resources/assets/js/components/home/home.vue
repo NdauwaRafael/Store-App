@@ -1,7 +1,8 @@
 <template>
   <div class="home-backgound">
+
     <div class="grid-x">
-      <div class="small-2 cell left-nav">
+      <div class="large-2 column left-nav show-for-large ">
         <div class="ovetop">
           <h4>Store App</h4>
           <ul >
@@ -50,14 +51,18 @@
 
       </div>
 
-      <div class="small-10 cell home-body">
+      <div class="large-10 column home-body">
         <div class="mynav">
+
           <div class="grid-container">
             <div class="grid-x">
-              <div class="small-8">
+              <div class="large-8">
+                <div class="menu-toggle hide-for-large">
+                  <h3>Menu <i class="el-icon-d-arrow-right"></i></h3>
+                </div>
               </div>
 
-              <div class="small-4 left-top-home">
+              <div class="large-4 left-top-home">
                 <div class="input-group search">
                   <input class="input-group-field" type="text">
                   <div class="input-group-button">

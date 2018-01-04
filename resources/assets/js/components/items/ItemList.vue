@@ -82,7 +82,7 @@ import { mapGetters } from 'vuex'
 </script>
 
 <template>
-  <div class="grid-container grid-padding-x">
+  <div class="itemList-component">
     <el-table
       :data="storeItemsList"
       style="width: 100%">

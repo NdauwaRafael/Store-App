@@ -31,6 +31,7 @@ basketlist: state => {
   return state.basket
 
 }
+
 }
 
 
@@ -71,11 +72,13 @@ const mutations = {
         basket_item_quantity: 1
       })
     }else{
-      if (items.quantity > 1) {
+      if (items.quantity > checkoutitem.basket_item_quantity) {
         checkoutitem.basket_item_quantity ++;
         this.state.error = false;
       }else {
         this.state.error = true;
+        // this.$message.error('Opps!! That was not supposed to happen');
+        console.log('error');
       }
     }
 
@@ -96,6 +99,10 @@ const mutations = {
     this.state.checkoutBasketList.push(basketlist);
     this.state.basket = [];
 
+  },
+
+  [types.CLEAR_BASKET_LIST](type, basketlist){
+    this.state.basket = [];
   }
 
   }
@@ -121,6 +128,10 @@ const actions = {
   },
   dispatchBasket({ commit }, basketlist){
     commit(types.CHECKOUT_BASKET_LIST, basketlist)
+},
+
+clearBasket({ commit }, basketlist){
+  commit(types.CLEAR_BASKET_LIST, basketlist)
 }
 
 

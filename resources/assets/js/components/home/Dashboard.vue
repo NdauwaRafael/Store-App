@@ -55,7 +55,11 @@
             </tbody>
           </table>
 
-          <button type="button" class="button info" @click="checkoutBasketList(this.basketItems)"><i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Checkout Products</button>
+          <button type="button" class="button info expanded" @click="checkoutBasketList(this.basketItems)">
+            <i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Checkout Products</button>
+
+          <button type="button" class="button warning expanded" @click="clearBasketList(this.basketItems)">
+              <i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Clear Basket and Close</button>
         </div>
 
     </div>
@@ -78,7 +82,8 @@ export default {
       },
       itemsnotavailable: true,
       itemsavailable: false,
-      waiting: true
+      waiting: true,
+      hasError: false
     }
   },
 
@@ -108,10 +113,20 @@ export default {
 
       this.$store.dispatch('addToBasket', this.basketlist)
       .then((response)=>{
-        this.$message({
-          message: 'Item Added to the Basket',
-          type: 'success'
-        });
+        this.hasError = this.$store.state.error;
+        if (this.hasError) {
+          this.$notify({
+            title: 'Warning',
+            message: 'Sorry But You cannot Add any more of this item to the store. IT SEEM WE RAN OUT OF STOCK',
+            type: 'warning'
+          });
+        }else{
+          this.$message({
+            message: 'Item Added to the Basket',
+            type: 'success'
+          });
+        }
+
 
       })
       .catch((err)=>{
@@ -143,12 +158,14 @@ export default {
       }else{
         this.$store.dispatch('dispatchBasket', items)
         .then((response)=>{
+          this.waiting = !this.waiting
+        })
+        .then((response)=>{
           this.$notify({
             title: 'Success',
             message: 'You have Successfully Checked Out Item Basket!!',
             type: 'success'
           });
-          this.waiting = !this.waiting
         })
         .catch((err)=>{
           this.$message.error('Opps!! That was not supposed to happen');
@@ -159,6 +176,22 @@ export default {
          });
       }
 
+    },
+
+    clearBasketList(){
+      const items = this.basketItems;
+      this.itemsnotavailable = !this.itemsnotavailable
+      this.itemsavailable = !this.itemsavailable
+      this.$store.dispatch('clearBasket', items)
+      .then((response)=>{
+        this.$notify.info({
+          title: 'BASKET NOTIFICATION',
+          message: 'Basket Items has been cleared, You can always add some more you know'
+        });
+      })
+      .catch((error)=>{
+
+      })
     }
   }
 }

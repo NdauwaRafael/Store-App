@@ -60064,7 +60064,7 @@ exports = module.exports = __webpack_require__(38)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60175,6 +60175,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60191,7 +60195,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       },
       itemsnotavailable: true,
       itemsavailable: false,
-      waiting: true
+      waiting: true,
+      hasError: false
     };
   },
 
@@ -60218,10 +60223,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
       this.basketlist.id = id;
 
       this.$store.dispatch('addToBasket', this.basketlist).then(function (response) {
-        _this.$message({
-          message: 'Item Added to the Basket',
-          type: 'success'
-        });
+        _this.hasError = _this.$store.state.error;
+        if (_this.hasError) {
+          _this.$notify({
+            title: 'Warning',
+            message: 'Sorry But You cannot Add any more of this item to the store. IT SEEM WE RAN OUT OF STOCK',
+            type: 'warning'
+          });
+        } else {
+          _this.$message({
+            message: 'Item Added to the Basket',
+            type: 'success'
+          });
+        }
       }).catch(function (err) {
         _this.$message.error('Opps!! That was not supposed to happen');
         console.log(err);
@@ -60249,12 +60263,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
       } else {
         this.$store.dispatch('dispatchBasket', items).then(function (response) {
+          _this2.waiting = !_this2.waiting;
+        }).then(function (response) {
           _this2.$notify({
             title: 'Success',
             message: 'You have Successfully Checked Out Item Basket!!',
             type: 'success'
           });
-          _this2.waiting = !_this2.waiting;
         }).catch(function (err) {
           _this2.$message.error('Opps!! That was not supposed to happen');
           console.log(err);
@@ -60262,6 +60277,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
           _this2.waiting = !_this2.waiting;
         });
       }
+    },
+    clearBasketList: function clearBasketList() {
+      var _this3 = this;
+
+      var items = this.basketItems;
+      this.itemsnotavailable = !this.itemsnotavailable;
+      this.itemsavailable = !this.itemsavailable;
+      this.$store.dispatch('clearBasket', items).then(function (response) {
+        _this3.$notify.info({
+          title: 'BASKET NOTIFICATION',
+          message: 'Basket Items has been cleared, You can always add some more you know'
+        });
+      }).catch(function (error) {});
     }
   }
 });
@@ -60375,7 +60403,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "button info",
+              staticClass: "button info expanded",
               attrs: { type: "button" },
               on: {
                 click: function($event) {
@@ -60389,6 +60417,26 @@ var render = function() {
                 class: { cartHidden: _vm.waiting }
               }),
               _vm._v(" Checkout Products")
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button warning expanded",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.clearBasketList(this.basketItems)
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "el-icon-loading",
+                class: { cartHidden: _vm.waiting }
+              }),
+              _vm._v(" Clear Basket and Close")
             ]
           )
         ]
@@ -61294,6 +61342,7 @@ var getters = {
   basketlist: function basketlist(state) {
     return state.basket;
   }
+
 };
 
 var mutations = (_mutations = {
@@ -61332,11 +61381,13 @@ var mutations = (_mutations = {
       basket_item_quantity: 1
     });
   } else {
-    if (items.quantity > 1) {
+    if (items.quantity > checkoutitem.basket_item_quantity) {
       checkoutitem.basket_item_quantity++;
       this.state.error = false;
     } else {
       this.state.error = true;
+      // this.$message.error('Opps!! That was not supposed to happen');
+      console.log('error');
     }
   }
 }), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["b" /* CHECKOUT_BASKET_LIST */], function (type, basketlist) {
@@ -61350,6 +61401,8 @@ var mutations = (_mutations = {
   }
 
   this.state.checkoutBasketList.push(basketlist);
+  this.state.basket = [];
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["c" /* CLEAR_BASKET_LIST */], function (type, basketlist) {
   this.state.basket = [];
 }), _mutations);
 
@@ -61385,6 +61438,11 @@ var actions = {
     var commit = _ref7.commit;
 
     commit(__WEBPACK_IMPORTED_MODULE_4__mutation_types__["b" /* CHECKOUT_BASKET_LIST */], basketlist);
+  },
+  clearBasket: function clearBasket(_ref8, basketlist) {
+    var commit = _ref8.commit;
+
+    commit(__WEBPACK_IMPORTED_MODULE_4__mutation_types__["c" /* CLEAR_BASKET_LIST */], basketlist);
   }
 };
 
@@ -61642,8 +61700,10 @@ module.exports = updateItemInArray;
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_TO_BASKET; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHECKOUT_BASKET_LIST; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CLEAR_BASKET_LIST; });
 var ADD_TO_BASKET = 'ADD_TO_BASKET';
 var CHECKOUT_BASKET_LIST = 'CHECKOUT_BASKET_LIST';
+var CLEAR_BASKET_LIST = 'CLEAR_BASKET_LIST';
 
 /***/ }),
 /* 168 */

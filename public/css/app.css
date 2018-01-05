@@ -122,6 +122,10 @@
   background: #fff !important;
 }
 
+.home-backgound .home-body .basket th {
+  background: #bdbdbd !important;
+}
+
 .home-backgound .home-body .basket button {
   top: 0;
   left: 0;

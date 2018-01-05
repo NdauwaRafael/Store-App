@@ -60064,7 +60064,7 @@ exports = module.exports = __webpack_require__(38)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60241,19 +60241,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     checkoutBasketList: function checkoutBasketList() {
       var _this2 = this;
 
-      this.$store.dispatch('dispatchBasket', this.basketItems).then(function (response) {
-        _this2.$notify({
-          title: 'Success',
-          message: 'You have Successfully Checked Out Item Basket!!',
-          type: 'success'
+      var items = this.basketItems;
+      if (items.length == 0) {
+        this.$notify.error({
+          title: 'Error',
+          message: 'Add Items To the cart First before Checking Out'
         });
-        _this2.waiting = !_this2.waiting;
-      }).catch(function (err) {
-        _this2.$message.error('Opps!! That was not supposed to happen');
-        console.log(err);
-      }).finally(function () {
-        _this2.waiting = !_this2.waiting;
-      });
+      } else {
+        this.$store.dispatch('dispatchBasket', items).then(function (response) {
+          _this2.$notify({
+            title: 'Success',
+            message: 'You have Successfully Checked Out Item Basket!!',
+            type: 'success'
+          });
+          _this2.waiting = !_this2.waiting;
+        }).catch(function (err) {
+          _this2.$message.error('Opps!! That was not supposed to happen');
+          console.log(err);
+        }).finally(function () {
+          _this2.waiting = !_this2.waiting;
+        });
+      }
     }
   }
 });
@@ -60371,7 +60379,7 @@ var render = function() {
               attrs: { type: "button" },
               on: {
                 click: function($event) {
-                  _vm.checkoutBasketList()
+                  _vm.checkoutBasketList(this.basketItems)
                 }
               }
             },

@@ -55,7 +55,7 @@
             </tbody>
           </table>
 
-          <button type="button" class="button info" @click="checkoutBasketList()"><i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Checkout Products</button>
+          <button type="button" class="button info" @click="checkoutBasketList(this.basketItems)"><i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Checkout Products</button>
         </div>
 
     </div>
@@ -133,22 +133,32 @@ export default {
     // ])
 
     checkoutBasketList(){
-      this.$store.dispatch('dispatchBasket', this.basketItems)
-      .then((response)=>{
-        this.$notify({
-          title: 'Success',
-          message: 'You have Successfully Checked Out Item Basket!!',
-          type: 'success'
+      const items = this.basketItems
+      if (items.length == 0) {
+        this.$notify.error({
+          title: 'Error',
+          message: 'Add Items To the cart First before Checking Out'
         });
-        this.waiting = !this.waiting
-      })
-      .catch((err)=>{
-        this.$message.error('Opps!! That was not supposed to happen');
-        console.log(err);
-      })
-      .finally(()=> {
-         this.waiting = !this.waiting
-       });
+
+      }else{
+        this.$store.dispatch('dispatchBasket', items)
+        .then((response)=>{
+          this.$notify({
+            title: 'Success',
+            message: 'You have Successfully Checked Out Item Basket!!',
+            type: 'success'
+          });
+          this.waiting = !this.waiting
+        })
+        .catch((err)=>{
+          this.$message.error('Opps!! That was not supposed to happen');
+          console.log(err);
+        })
+        .finally(()=> {
+           this.waiting = !this.waiting
+         });
+      }
+
     }
   }
 }

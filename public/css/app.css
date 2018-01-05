@@ -87,6 +87,17 @@
           box-shadow: 5px 2px 10px 1px grey;
 }
 
+.home-backgound .menuVisible {
+  position: absolute;
+  visibility: visible;
+  width: 50%;
+}
+
+.home-backgound .dismissMenu {
+  position: absolute;
+  float: right;
+}
+
 .home-backgound .home-body {
   background: #EEEEEE;
   position: relative;
@@ -96,6 +107,25 @@
 
 .home-backgound .home-body .mynav {
   width: 100%;
+}
+
+.home-backgound .home-body .basket {
+  margin: 0 10px;
+  -webkit-box-shadow: 10px 10px 10px 1px grey;
+          box-shadow: 10px 10px 10px 1px grey;
+  background: #fff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.home-backgound .home-body .basket tr {
+  background: #fff !important;
+}
+
+.home-backgound .home-body .basket button {
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .home-backgound h4 {
@@ -128,7 +158,8 @@
 .mynav .left-top-home .settings {
   width: 20%;
   font-size: 30px;
-  color: #757575;
+  color: #00FF00;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 1024px) {
@@ -149,8 +180,19 @@
   }
 }
 
+.dashboard-component .dashboard-nav .settings {
+  width: 20%;
+  font-size: 30px;
+  color: #00695c;
+  cursor: pointer;
+}
+
+.dashboard-component .dashboard-nav .settings small {
+  font-size: 20px;
+}
+
 .cartHidden {
-  visibility: hidden;
+  visibility: hidden !important;
 }
 
 /**

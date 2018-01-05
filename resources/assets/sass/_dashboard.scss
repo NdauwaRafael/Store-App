@@ -1,3 +1,19 @@
+.dashboard-component {
+  .dashboard-nav {
+    .settings {
+      width: 20%;
+      font-size: 30px;
+      color: #00695c;
+      cursor: pointer;
+
+      small {
+        font-size: 20px;
+      }
+
+    }
+  }
+}
+
 .cartHidden {
-  visibility: hidden;
+  visibility: hidden !important;
 }

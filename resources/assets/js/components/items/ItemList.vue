@@ -43,7 +43,9 @@ import { mapGetters } from 'vuex'
             type: 'success'
           });
 
-          this.$router.push('/itemList')
+        })
+        .then((response)=>{
+          this.$router.replace('/itemList')
         })
         .catch((err)=>{
           this.$message.error('Item Could not be Deleted An error occurred');
@@ -61,8 +63,9 @@ import { mapGetters } from 'vuex'
           this.innerVisible = false;
           this.outerVisible = false;
 
-          this.$router.push('/itemList')
-
+        })
+        .then((response)=>{
+          // this.$router.replace('/dashboard')
         })
         .catch((err)=>{
           this.$message.error('Item Could not be updated Successfully');
@@ -76,77 +79,42 @@ import { mapGetters } from 'vuex'
         storeItemsList: 'storeItems'
       })
     },
-
+    watch: {
+      storeItems: function(){
+        alert('data changed')
+      }
+    }
 
   }
 </script>
 
 <template>
   <div class="itemList-component">
-    <el-table
-      :data="storeItemsList"
-      style="width: 100%">
 
-      <el-table-column
-        prop="index"
-        label="#"
-        >
-        <template slot-scope="scope" >
-          {{scope.$index+1}}
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        prop="name"
-        label="Item Name"
-
-        >
-      </el-table-column>
-
-      <el-table-column
-        prop="category"
-        label="Item Category"
-        width="150">
-      </el-table-column>
-
-      <el-table-column
-        prop="quantity"
-        label="Number of Items"
-        width="150">
-      </el-table-column>
-
-      <el-table-column
-        prop="price"
-        label="Item Price (Ksh.)"
-        width="300">
-      </el-table-column>
-
-      <el-table-column
-        prop="tag"
-        label="Edit"
-        width="120"
-          >
-        <template slot-scope="edit">
-          <el-button plain @click="handleEdit(edit.$index, edit.row)">Edit </el-button>
-        </template>
-
-      </el-table-column>
-
-      <el-table-column
-        prop="tag"
-        label="Delete"
-        width="100"
-          >
-        <template slot-scope="del">
-          <el-button plain type="danger" @click="handleDelete(del.$index)">Delete</el-button>
-        </template>
-
-      </el-table-column>
-
-    </el-table-column>
-    </el-table>
-
-
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Item Name</th>
+          <th >Item Category</th>
+          <th>Number of Items</th>
+          <th >Item Price (Ksh.)</th>
+          <th>Edit</th>
+          <th >Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in storeItemsList">
+          <td>{{index + 1}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.category}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.price}}</td>
+          <td><el-button plain @click="handleEdit(index, item)">Edit </el-button></td>
+          <td><el-button plain type="danger" @click="handleDelete(index)">Delete</el-button></td>
+        </tr>
+      </tbody>
+    </table>
 
     <el-dialog title="Outter Dialog" :visible.sync="outerVisible">
       <form>

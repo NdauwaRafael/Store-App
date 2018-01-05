@@ -1,5 +1,12 @@
 <template >
   <div class="dashboard-component">
+    <div class="dashboard-nav">
+      <div class="grid-container">
+        <div class="settings" @click="toggleCart()">
+          <i class="el-icon-goods"></i> <small>Item Basket</small>
+        </div>
+      </div>
+    </div>
     <div class="grid-x">
         <div class="item-list" v-bind:class = "{'large-12': itemsnotavailable, 'large-8': itemsavailable }">
           <table>
@@ -29,7 +36,7 @@
             </table>
         </div>
 
-        <div class="basket" v-bind:class = "{ 'large-4': itemsavailable, 'cartHidden':itemsnotavailable }">
+        <div class="basket" v-bind:class = "{ 'large-3': itemsavailable, 'cartHidden':itemsnotavailable }">
 
 
           <table>
@@ -47,6 +54,8 @@
               </tr>
             </tbody>
           </table>
+
+          <button type="button" class="button info" @click="checkoutBasketList()"><i class="el-icon-loading" v-bind:class = "{'cartHidden': waiting}"></i> Checkout Products</button>
         </div>
 
     </div>
@@ -68,18 +77,22 @@ export default {
         id: ''
       },
       itemsnotavailable: true,
-      itemsavailable: false
+      itemsavailable: false,
+      waiting: true
     }
   },
+
+  props: ['tCart'],
 
   computed: {
     ...mapGetters({
       storeItemsList: 'storeItems',
       basketItems: 'basketlist'
     })
-
-
   },
+
+
+
   methods: {
     cart(id, item){
       this.itemsnotavailable = false
@@ -108,9 +121,35 @@ export default {
 
 
     },
+
+    toggleCart(){
+        this.itemsnotavailable = !this.itemsnotavailable
+        this.itemsavailable = !this.itemsavailable
+        console.log(this.itemsavailable);
+    },
     // ...mapActions([
     //   'addToBasket'
+    // 'You cannot Checkout More Items Than The store has'
     // ])
+
+    checkoutBasketList(){
+      this.$store.dispatch('dispatchBasket', this.basketItems)
+      .then((response)=>{
+        this.$notify({
+          title: 'Success',
+          message: 'You have Successfully Checked Out Item Basket!!',
+          type: 'success'
+        });
+        this.waiting = !this.waiting
+      })
+      .catch((err)=>{
+        this.$message.error('Opps!! That was not supposed to happen');
+        console.log(err);
+      })
+      .finally(()=> {
+         this.waiting = !this.waiting
+       });
+    }
   }
 }
 </script>

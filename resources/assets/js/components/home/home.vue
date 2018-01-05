@@ -2,8 +2,11 @@
   <div class="home-backgound">
 
     <div class="grid-x">
-      <div class="large-2 column left-nav show-for-large ">
+      <div class="large-2 column left-nav  " v-bind:class="{'menuVisible': isVisible, 'show-for-large':showLarge,}">
         <div class="ovetop">
+          <div class="dismissMenu hide-for-large" v-bind:class = "{'visibility':isVisible }" @click="menuVisible()">
+            <h1><i class="el-icon-close"></i> </h1>
+          </div>
           <h4>Store App</h4>
           <ul >
             <li>
@@ -57,7 +60,7 @@
           <div class="grid-container">
             <div class="grid-x">
               <div class="large-8">
-                <div class="menu-toggle hide-for-large">
+                <div class="menu-toggle hide-for-large" @click="menuVisible">
                   <h3>Menu <i class="el-icon-d-arrow-right"></i></h3>
                 </div>
               </div>
@@ -71,7 +74,7 @@
                 </div>
 
                 <div class="settings">
-                  <i class="el-icon-setting"></i>
+                  <i class="el-icon-goods"></i>
                 </div>
               </div>
             </div>
@@ -86,6 +89,20 @@
 
 <script>
 export default {
-  name:'home'
+  name:'home',
+
+  data() {
+    return {
+      toggle: false,
+      isVisible: false,
+      showLarge: true
+    }
+  },
+  methods: {
+    menuVisible(){
+      this.isVisible = !this.isVisible
+      this.showLarge = !this.showLarge
+    }
+  }
 }
 </script>

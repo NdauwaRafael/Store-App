@@ -59732,9 +59732,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'home'
+  name: 'home',
+
+  data: function data() {
+    return {
+      toggle: false,
+      isVisible: false,
+      showLarge: true
+    };
+  },
+
+  methods: {
+    menuVisible: function menuVisible() {
+      this.isVisible = !this.isVisible;
+      this.showLarge = !this.showLarge;
+    }
+  }
 });
 
 /***/ }),
@@ -59747,109 +59765,130 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "home-backgound" }, [
     _c("div", { staticClass: "grid-x" }, [
-      _c("div", { staticClass: "large-2 column left-nav show-for-large " }, [
-        _c("div", { staticClass: "ovetop" }, [
-          _c("h4", [_vm._v("Store App")]),
-          _vm._v(" "),
-          _c("ul", [
+      _c(
+        "div",
+        {
+          staticClass: "large-2 column left-nav  ",
+          class: { menuVisible: _vm.isVisible, "show-for-large": _vm.showLarge }
+        },
+        [
+          _c("div", { staticClass: "ovetop" }, [
             _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    attrs: {
-                      to: _vm._a(0, function() {
-                        return { path: "/dashboard" }
-                      })
-                    }
-                  },
-                  [
-                    _c("a", [
-                      _c("i", { staticClass: "el-icon-menu" }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v("Dashboard")])
-                    ])
-                  ]
-                )
-              ],
-              1
+              "div",
+              {
+                staticClass: "dismissMenu hide-for-large",
+                class: { visibility: _vm.isVisible },
+                on: {
+                  click: function($event) {
+                    _vm.menuVisible()
+                  }
+                }
+              },
+              [_vm._m(0)]
             ),
             _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    attrs: {
-                      to: _vm._a(1, function() {
-                        return { name: "addItem" }
-                      })
-                    }
-                  },
-                  [
-                    _c("a", [
-                      _c("i", { staticClass: "el-icon-circle-plus" }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v("Add Item")])
-                    ])
-                  ]
-                )
-              ],
-              1
-            ),
+            _c("h4", [_vm._v("Store App")]),
             _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    attrs: {
-                      to: _vm._a(2, function() {
-                        return { name: "itemList" }
-                      })
-                    }
-                  },
-                  [
-                    _c("a", [
-                      _c("i", { staticClass: "el-icon-info" }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v("View Items")])
-                    ])
-                  ]
-                )
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "li",
-              [
-                _c(
-                  "router-link",
-                  {
-                    attrs: {
-                      to: _vm._a(3, function() {
-                        return { name: "itemList" }
-                      })
-                    }
-                  },
-                  [
-                    _c("a", [
-                      _c("i", { staticClass: "el-icon-plus" }),
-                      _vm._v(" "),
-                      _c("span", [_vm._v("Add Store Manager")])
-                    ])
-                  ]
-                )
-              ],
-              1
-            )
+            _c("ul", [
+              _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: _vm._a(0, function() {
+                          return { path: "/dashboard" }
+                        })
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("i", { staticClass: "el-icon-menu" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Dashboard")])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: _vm._a(1, function() {
+                          return { name: "addItem" }
+                        })
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("i", { staticClass: "el-icon-circle-plus" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Add Item")])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: _vm._a(2, function() {
+                          return { name: "itemList" }
+                        })
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("i", { staticClass: "el-icon-info" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("View Items")])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                [
+                  _c(
+                    "router-link",
+                    {
+                      attrs: {
+                        to: _vm._a(3, function() {
+                          return { name: "itemList" }
+                        })
+                      }
+                    },
+                    [
+                      _c("a", [
+                        _c("i", { staticClass: "el-icon-plus" }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Add Store Manager")])
+                      ])
+                    ]
+                  )
+                ],
+                1
+              )
+            ])
           ])
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -59858,7 +59897,16 @@ var render = function() {
           _c("div", { staticClass: "mynav" }, [
             _c("div", { staticClass: "grid-container" }, [
               _c("div", { staticClass: "grid-x" }, [
-                _vm._m(0),
+                _c("div", { staticClass: "large-8" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "menu-toggle hide-for-large",
+                      on: { click: _vm.menuVisible }
+                    },
+                    [_vm._m(1)]
+                  )
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "large-4 left-top-home" }, [
                   _c("div", { staticClass: "input-group search" }, [
@@ -59883,7 +59931,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(2)
                 ])
               ])
             ])
@@ -59901,13 +59949,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "large-8" }, [
-      _c("div", { staticClass: "menu-toggle hide-for-large" }, [
-        _c("h3", [
-          _vm._v("Menu "),
-          _c("i", { staticClass: "el-icon-d-arrow-right" })
-        ])
-      ])
+    return _c("h1", [_c("i", { staticClass: "el-icon-close" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", [
+      _vm._v("Menu "),
+      _c("i", { staticClass: "el-icon-d-arrow-right" })
     ])
   },
   function() {
@@ -59915,7 +59965,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "settings" }, [
-      _c("i", { staticClass: "el-icon-setting" })
+      _c("i", { staticClass: "el-icon-goods" })
     ])
   }
 ]
@@ -60014,7 +60064,7 @@ exports = module.exports = __webpack_require__(38)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -60116,6 +60166,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -60131,15 +60190,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         id: ''
       },
       itemsnotavailable: true,
-      itemsavailable: false
+      itemsavailable: false,
+      waiting: true
     };
   },
 
+
+  props: ['tCart'],
 
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
     storeItemsList: 'storeItems',
     basketItems: 'basketlist'
   })),
+
   methods: {
     cart: function cart(id, item) {
       var _this = this;
@@ -60163,6 +60226,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         _this.$message.error('Opps!! That was not supposed to happen');
         console.log(err);
       });
+    },
+    toggleCart: function toggleCart() {
+      this.itemsnotavailable = !this.itemsnotavailable;
+      this.itemsavailable = !this.itemsavailable;
+      console.log(this.itemsavailable);
+    },
+
+    // ...mapActions([
+    //   'addToBasket'
+    // 'You cannot Checkout More Items Than The store has'
+    // ])
+
+    checkoutBasketList: function checkoutBasketList() {
+      var _this2 = this;
+
+      this.$store.dispatch('dispatchBasket', this.basketItems).then(function (response) {
+        _this2.$notify({
+          title: 'Success',
+          message: 'You have Successfully Checked Out Item Basket!!',
+          type: 'success'
+        });
+        _this2.waiting = !_this2.waiting;
+      }).catch(function (err) {
+        _this2.$message.error('Opps!! That was not supposed to happen');
+        console.log(err);
+      }).finally(function () {
+        _this2.waiting = !_this2.waiting;
+      });
     }
   }
 });
@@ -60176,6 +60267,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "dashboard-component" }, [
+    _c("div", { staticClass: "dashboard-nav" }, [
+      _c("div", { staticClass: "grid-container" }, [
+        _c(
+          "div",
+          {
+            staticClass: "settings",
+            on: {
+              click: function($event) {
+                _vm.toggleCart()
+              }
+            }
+          },
+          [
+            _c("i", { staticClass: "el-icon-goods" }),
+            _vm._v(" "),
+            _c("small", [_vm._v("Item Basket")])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "grid-x" }, [
       _c(
         "div",
@@ -60232,7 +60344,7 @@ var render = function() {
         {
           staticClass: "basket",
           class: {
-            "large-4": _vm.itemsavailable,
+            "large-3": _vm.itemsavailable,
             cartHidden: _vm.itemsnotavailable
           }
         },
@@ -60250,7 +60362,27 @@ var render = function() {
                 ])
               })
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button info",
+              attrs: { type: "button" },
+              on: {
+                click: function($event) {
+                  _vm.checkoutBasketList()
+                }
+              }
+            },
+            [
+              _c("i", {
+                staticClass: "el-icon-loading",
+                class: { cartHidden: _vm.waiting }
+              }),
+              _vm._v(" Checkout Products")
+            ]
+          )
         ]
       )
     ])
@@ -60696,8 +60828,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
           message: 'Item Deleted Successfully',
           type: 'success'
         });
-
-        _this.$router.push('/itemList');
+      }).then(function (response) {
+        _this.$router.replace('/itemList');
       }).catch(function (err) {
         _this.$message.error('Item Could not be Deleted An error occurred');
         console.log(err);
@@ -60713,8 +60845,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
         _this2.innerVisible = false;
         _this2.outerVisible = false;
-
-        _this2.$router.push('/itemList');
+      }).then(function (response) {
+        // this.$router.replace('/dashboard')
       }).catch(function (err) {
         _this2.$message.error('Item Could not be updated Successfully');
         console.log(err);
@@ -60723,7 +60855,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
   },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
     storeItemsList: 'storeItems'
-  }))
+  })),
+  watch: {
+    storeItems: function storeItems() {
+      alert('data changed');
+    }
+  }
 
 });
 
@@ -60739,92 +60876,64 @@ var render = function() {
     "div",
     { staticClass: "itemList-component" },
     [
-      _c(
-        "el-table",
-        { staticStyle: { width: "100%" }, attrs: { data: _vm.storeItemsList } },
-        [
-          _c("el-table-column", {
-            attrs: { prop: "index", label: "#" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(scope) {
-                  return [
-                    _vm._v("\n        " + _vm._s(scope.$index + 1) + "\n      ")
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "name", label: "Item Name" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "category", label: "Item Category", width: "150" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "quantity", label: "Number of Items", width: "150" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "price", label: "Item Price (Ksh.)", width: "300" }
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "tag", label: "Edit", width: "120" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(edit) {
-                  return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { plain: "" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleEdit(edit.$index, edit.row)
-                          }
+      _c("table", [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.storeItemsList, function(item, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(index + 1))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.category))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.quantity))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(item.price))]),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { plain: "" },
+                      on: {
+                        click: function($event) {
+                          _vm.handleEdit(index, item)
                         }
-                      },
-                      [_vm._v("Edit ")]
-                    )
-                  ]
-                }
-              }
-            ])
-          }),
-          _vm._v(" "),
-          _c("el-table-column", {
-            attrs: { prop: "tag", label: "Delete", width: "100" },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(del) {
-                  return [
-                    _c(
-                      "el-button",
-                      {
-                        attrs: { plain: "", type: "danger" },
-                        on: {
-                          click: function($event) {
-                            _vm.handleDelete(del.$index)
-                          }
+                      }
+                    },
+                    [_vm._v("Edit ")]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "td",
+                [
+                  _c(
+                    "el-button",
+                    {
+                      attrs: { plain: "", type: "danger" },
+                      on: {
+                        click: function($event) {
+                          _vm.handleDelete(index)
                         }
-                      },
-                      [_vm._v("Delete")]
-                    )
-                  ]
-                }
-              }
+                      }
+                    },
+                    [_vm._v("Delete")]
+                  )
+                ],
+                1
+              )
             ])
           })
-        ],
-        1
-      ),
+        )
+      ]),
       _vm._v(" "),
       _c(
         "el-dialog",
@@ -61095,7 +61204,30 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Item Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Item Category")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Number of Items")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Item Price (Ksh.)")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Edit")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Delete")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -61118,6 +61250,8 @@ if (false) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_array_update_item__ = __webpack_require__(166);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_array_update_item___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_array_update_item__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mutation_types__ = __webpack_require__(167);
+var _mutations;
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /*-------------------------------------------------------------------------
@@ -61137,7 +61271,10 @@ var state = {
     storeItems: []
   },
 
-  basket: []
+  basket: [],
+  checkoutBasketList: [],
+
+  error: false
 
 };
 
@@ -61151,7 +61288,7 @@ var getters = {
   }
 };
 
-var mutations = _defineProperty({
+var mutations = (_mutations = {
   /*------registering Items to local storage-----*/
   ADD_ITEM: function ADD_ITEM(state, itms) {
 
@@ -61172,7 +61309,7 @@ var mutations = _defineProperty({
       return false;
     }
   }
-}, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["a" /* ADD_TO_BASKET */], function (type, _ref) {
+}, _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["a" /* ADD_TO_BASKET */], function (type, _ref) {
   var id = _ref.id;
 
   var checkoutitem = state.basket.find(function (item) {
@@ -61187,9 +61324,26 @@ var mutations = _defineProperty({
       basket_item_quantity: 1
     });
   } else {
-    checkoutitem.basket_item_quantity++;
+    if (items.quantity > 1) {
+      checkoutitem.basket_item_quantity++;
+      this.state.error = false;
+    } else {
+      this.state.error = true;
+    }
   }
-});
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["b" /* CHECKOUT_BASKET_LIST */], function (type, basketlist) {
+  var i;
+  for (i = 0; i < basketlist.length; i++) {
+    var basketItem = basketlist[i];
+    var qtty = basketItem.basket_item_quantity;
+    var bId = basketItem.id;
+    var index = basketlist.indexOf(basketItem);
+    state.storage.storeItems[bId].quantity -= qtty;
+  }
+
+  this.state.checkoutBasketList.push(basketlist);
+  this.state.basket = [];
+}), _mutations);
 
 var actions = {
   getItem: function getItem(_ref2, itm) {
@@ -61218,6 +61372,11 @@ var actions = {
     commit(__WEBPACK_IMPORTED_MODULE_4__mutation_types__["a" /* ADD_TO_BASKET */], {
       id: itm.id
     });
+  },
+  dispatchBasket: function dispatchBasket(_ref7, basketlist) {
+    var commit = _ref7.commit;
+
+    commit(__WEBPACK_IMPORTED_MODULE_4__mutation_types__["b" /* CHECKOUT_BASKET_LIST */], basketlist);
   }
 };
 
@@ -61474,7 +61633,9 @@ module.exports = updateItemInArray;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ADD_TO_BASKET; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHECKOUT_BASKET_LIST; });
 var ADD_TO_BASKET = 'ADD_TO_BASKET';
+var CHECKOUT_BASKET_LIST = 'CHECKOUT_BASKET_LIST';
 
 /***/ }),
 /* 168 */

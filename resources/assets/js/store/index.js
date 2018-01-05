@@ -16,7 +16,9 @@ const state = {
   },
 
   basket: [],
+  checkoutBasketList: [],
 
+  error: false
 
 }
 
@@ -69,8 +71,30 @@ const mutations = {
         basket_item_quantity: 1
       })
     }else{
-      checkoutitem.basket_item_quantity ++;
+      if (items.quantity > 1) {
+        checkoutitem.basket_item_quantity ++;
+        this.state.error = false;
+      }else {
+        this.state.error = true;
+      }
     }
+
+  },
+
+  /*@------MUTATIONS TO CHECKOUT BASKET ITEMS------@*/
+  [types.CHECKOUT_BASKET_LIST](type, basketlist){
+    var i;
+    for(i = 0; i < basketlist.length; i++) {
+      const basketItem = basketlist[i];
+      const qtty = basketItem.basket_item_quantity;
+      const bId = basketItem.id;
+      const index = basketlist.indexOf(basketItem);
+      state.storage.storeItems[bId].quantity -=qtty;
+
+    }
+
+    this.state.checkoutBasketList.push(basketlist);
+    this.state.basket = [];
 
   }
 
@@ -94,7 +118,12 @@ const actions = {
         commit(types.ADD_TO_BASKET, {
           id: itm.id
     })
-  }
+  },
+  dispatchBasket({ commit }, basketlist){
+    commit(types.CHECKOUT_BASKET_LIST, basketlist)
+}
+
+
 }
 
 

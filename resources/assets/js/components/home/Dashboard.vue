@@ -24,7 +24,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="(item, index) of storeItemsList">
+                <tr v-for="(item, index) of storeItemsList" v-if="item.quantity >= 1">
                   <td >{{index + 1}}</td>
                   <td >{{item.name}}</td>
                   <td >{{item.category}}</td>
@@ -121,10 +121,12 @@ export default {
             type: 'warning'
           });
         }else{
+          this.hasError = false
           this.$message({
             message: 'Item Added to the Basket',
             type: 'success'
           });
+
         }
 
 

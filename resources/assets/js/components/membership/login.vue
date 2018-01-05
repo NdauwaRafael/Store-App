@@ -53,19 +53,30 @@ export default {
     return {
       loginForm: {
         email: 'rkaranja@cytonn.com',
-        password: 'password'
+        password: 'password',
+        token: ''
       }
     }
   },
   methods: {
     login(){
-      this.$message({
-        message: 'Congrats, this is a success message.',
-        type: 'success'
-      });
+        this.$http.post('/login/',
+            {email: this.email, password: this.password},
+            {headers: {'X-Requested-With': 'XMLHttpRequest'}
+            })
+        .then((response)=>{
+          const token = response.data.token;
+        })
+            .catch((err)=>{
+
+            })
+//      this.$message({
+//        message: 'Congrats, this is a success message.',
+//        type: 'success'
+//      });
 
       // this.$router.push('/home');
-      this.$http.post(loginURL);
+      //this.$http.post(loginURL);
     }
   }
 }

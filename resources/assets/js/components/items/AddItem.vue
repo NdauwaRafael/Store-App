@@ -50,7 +50,7 @@ return {
         <div class="grid-x grid-padding-x">
           <div class="medium-6 cell">
             <label>Item Quantity
-              <input v-model="items.quantity" type="text" placeholder="Item Quantity">
+              <input v-model="items.quantity" type="number" placeholder="Item Quantity">
             </label>
           </div>
           <div class="medium-6 cell">

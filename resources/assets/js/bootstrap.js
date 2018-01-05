@@ -1,3 +1,53 @@
+import Vue from 'vue';
+import VueResource from 'vue-resource';
+
+Vue.use(VueResource);
+
+/* IN OUR TESTS */
+let routes = [
+    {
+        method: 'GET',
+        url: 'quotes/',
+        response: [
+            {id: 14, body: "You know what the chain of command is? It's the chain I go get and beat you with until you understand who's in ruttin charge here."},
+            {id: 22, body: 'Also? I can kill you with my brain.'}
+        ]
+    },
+    {
+        method: 'POST',
+        url: 'quotes/',
+        response: {id: 23, body: 'Terse? I can be terse. Once, in flight school, I was laconic.'}
+    },
+    {
+        method: 'GET',
+        url: 'quotes/18/',
+        response: {id: 18, body: 'Curse your sudden but inevitable betrayal!'}
+    },
+    {
+        method: 'GET',
+        url: '/login',
+        response: {id: 18, body: 'Curse your sudden but inevitable betrayal!'}
+    }
+];
+
+Vue.http.interceptors.unshift((request, next) => {
+    let route = routes.find((item) => {
+        return (request.method === item.method && request.url === item.url);
+    });
+    if (!route) {
+        console.log(route);
+        // we're just going to return a 404 here, since we don't want our test suite making a real HTTP request
+        next(request.respondWith({status: 404, statusText: 'Oh no! Not found!'}));
+    } else {
+        next(
+            request.respondWith(
+                route.response,
+                {status: 200}
+            )
+        );
+    }
+});
+
 
 window._ = require('lodash');
 

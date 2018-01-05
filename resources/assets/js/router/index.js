@@ -6,7 +6,7 @@ import Home from '../components/home/home'
 import Dashboard from '../components/home/Dashboard'
 import AddItem from '../components/items/AddItem.vue'
 import ItemList from '../components/items/ItemList.vue'
-
+import Store from '../components/home/test.vue'
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -42,6 +42,10 @@ const router = new VueRouter({
                 path: '/dashboard',
                 component: Dashboard,
                 name: 'Dashboard'
+              },
+              {
+                  path: '/test',
+                  component: Store
               }
           ]
       }

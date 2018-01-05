@@ -1,6 +1,5 @@
 <template>
 
-  <!--comment-->
 
   <div>
     <div class="body-full-firstpage">

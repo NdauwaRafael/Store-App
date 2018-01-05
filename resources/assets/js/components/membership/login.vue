@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!--comments-->
     <div class="body-full-firstpage">
       <div class="overlay-top">
         <div class="grid-container">

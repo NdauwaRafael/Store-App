@@ -6,6 +6,7 @@ import Vuex from 'vuex';
 import vuejsStorage from 'vuejs-storage'
 import updateItemInArray from 'array-update-item'
 import * as types from './mutation-types'
+import Login from './modules/login'
 
 Vue.use(Vuex);
 Vue.use(vuejsStorage);
@@ -143,6 +144,9 @@ const store = new Vuex.Store({
   getters,
   actions,
   mutations,
+    modules: {
+        Login,
+    },
 
   plugins: [
   vuejsStorage({ namespace: 'store-items' })

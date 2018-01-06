@@ -25,9 +25,14 @@ let routes = [
     },
     {
         method: 'GET',
-        url: '/login',
-        response: {id: 18, body: 'Curse your sudden but inevitable betrayal!'}
-    }
+        url: 'login/',
+        response: {token: 'this token'}
+    },
+    {
+        method: 'POST',
+        url: 'login/',
+        response: {token: 'this token'}
+    },
 ];
 
 Vue.http.interceptors.unshift((request, next) => {

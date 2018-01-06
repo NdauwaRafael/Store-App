@@ -1,5 +1,5 @@
 <script>
-
+    import { mapGetters } from 'vuex'
 export default {
   name: 'addItem',
 
@@ -24,7 +24,9 @@ return {
     }
   },
   computed: {
-
+      ...mapGetters({
+          storeItemsList: 'storeItems'
+      })
   }
 }
 </script>

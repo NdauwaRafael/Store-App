@@ -43,42 +43,77 @@
   </div>
 </template>
 
-
-
-
 <script>
-export default {
-  name: 'login',
+    import { mapGetters } from 'vuex'
+    export default {
+      name: 'login',
+        data(){
+          return {
+            loginForm: {
+              email: 'rkaranja@cytonn.com',
+              password: 'password',
+              token: ''
+            },
+              isloggedin:false,
+              isError: false,
+              loggedin: {}
+          }
+        },
+          computed: {
+              ...mapGetters({
+                  userLoggedin: 'userLoggedin',
+                  loggedUser: 'loggedUser',
+                  loginError: 'loginError'
+              }),
+          },
+        methods: {
+          login(){
+              this.$http.get('login/')
+              .then((response)=>{
+                this.token = response.data.token;
+                console.log(this.token)
+                  this.$store.dispatch('login', this.loginForm)
+                      .then((res)=>{
+                          this.$message({
+                              message: 'Congrats, this is a success message.',
+                              type: 'success'
+                          });
+                      })
+                      .catch((er)=>{
 
-  data(){
-    return {
-      loginForm: {
-        email: 'rkaranja@cytonn.com',
-        password: 'password',
-        token: ''
-      }
+                      })
+              })
+                  .catch((err)=>{
+                      console.log(err)
+                  })
+
+
+            // this.$router.push('/home');
+            //this.$http.post(loginURL);
+          },
+            loginState() {
+                if(this.isloggedin){
+                    this.$router.push('/home')
+                }else{
+                    if(this.isError) {
+                        this.$notify.error({
+                            title: 'Login Error',
+                            message: 'Failed to Login, please check your details and try again'
+                        });
+                    }
+                }
+            }
+        },
+        mounted() {
+            let status = this.userLoggedin;
+            this.isloggedin = status;
+            this.isError = this.loginError
+            this.loginState()
+        },
+        watch: {
+            isloggedin: function () {
+                this.loginState();
+            }
+        }
     }
-  },
-  methods: {
-    login(){
-        this.$http.post('/login/',
-            {email: this.email, password: this.password},
-            {headers: {'X-Requested-With': 'XMLHttpRequest'}
-            })
-        .then((response)=>{
-          const token = response.data.token;
-        })
-            .catch((err)=>{
-
-            })
-//      this.$message({
-//        message: 'Congrats, this is a success message.',
-//        type: 'success'
-//      });
-
-      // this.$router.push('/home');
-      //this.$http.post(loginURL);
-    }
-  }
-}
 </script>

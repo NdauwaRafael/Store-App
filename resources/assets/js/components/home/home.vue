@@ -78,6 +78,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex'
 export default {
   name:'home',
 
@@ -85,14 +86,38 @@ export default {
     return {
       toggle: false,
       isVisible: false,
-      showLarge: true
+      showLarge: true,
+        isloggedin:false,
+      loggedin: {}
     }
   },
+    computed: {
+        ...mapGetters({
+            userLoggedin: 'userLoggedin',
+            loggedUser: 'loggedUser'
+        }),
+
+    },
   methods: {
     menuVisible(){
       this.isVisible = !this.isVisible
       this.showLarge = !this.showLarge
+    },
+      loginState() {
+          if(!this.isloggedin){
+              this.$router.push('/')
+          }
+      }
+  },
+    mounted() {
+        let status = this.userLoggedin;
+        this.isloggedin = status;
+        this.loginState()
+    },
+    watch: {
+        isloggedin: function () {
+            this.loginState();
+        }
     }
-  }
 }
 </script>

@@ -29945,8 +29945,8 @@ var state = {
   error: false,
   loggedUser: {},
   loginError: false,
-  userLoggedin: false
-
+  userLoggedin: false,
+  logoutMsg: false
 };
 
 var getters = {
@@ -29964,6 +29964,9 @@ var getters = {
   },
   loginError: function loginError(state) {
     return state.loginError;
+  },
+  logoutMsg: function logoutMsg(state) {
+    return state.logoutMsg;
   }
 };
 
@@ -30046,6 +30049,13 @@ var mutations = (_mutations = {
     state.userLoggedin = false;
     state.loginError = true;
   }
+}), _defineProperty(_mutations, __WEBPACK_IMPORTED_MODULE_4__mutation_types__["e" /* LOGOUT_USER */], function (types, logedUser) {
+  var logedIn = state.loggedUser;
+  if (logedIn) {
+    state.loggedUser = {};
+    state.userLoggedin = false;
+    state.logoutMsg = true;
+  }
 }), _mutations);
 
 var actions = {
@@ -30090,6 +30100,11 @@ var actions = {
     var commit = _ref9.commit;
 
     commit('LOGIN_USER', user);
+  },
+  logout: function logout(_ref10, user) {
+    var commit = _ref10.commit;
+
+    commit('LOGOUT_USER', user);
   }
 };
 
@@ -30113,10 +30128,12 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return CHECKOUT_BASKET_LIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return CLEAR_BASKET_LIST; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return LOGIN_USER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return LOGOUT_USER; });
 var ADD_TO_BASKET = 'ADD_TO_BASKET';
 var CHECKOUT_BASKET_LIST = 'CHECKOUT_BASKET_LIST';
 var CLEAR_BASKET_LIST = 'CLEAR_BASKET_LIST';
 var LOGIN_USER = 'LOGIN_USER';
+var LOGOUT_USER = 'LOGOUT_USER';
 
 /***/ }),
 /* 77 */
@@ -61631,6 +61648,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61648,7 +61674,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
         userLoggedin: 'userLoggedin',
-        loggedUser: 'loggedUser'
+        loggedUser: 'loggedUser',
+        logoutMsg: 'logoutMsg'
     })),
     methods: {
         menuVisible: function menuVisible() {
@@ -61659,6 +61686,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (!this.isloggedin) {
                 this.$router.push('/');
             }
+        },
+        logout: function logout() {
+            var _this = this;
+
+            this.$store.dispatch('logout', this.loggedUser).then(function (responce) {
+                if (_this.logoutMsg) {
+                    _this.$message('You have successfully Logged Out!! Come back soon. We will miss you');
+                    _this.$router.push('/');
+                } else {
+                    _this.$message.error('Oops, that was not supposed to happen. There is an error somewhere.');
+                }
+            }).catch(function (error) {});
         }
     },
     mounted: function mounted() {
@@ -61779,7 +61818,25 @@ var render = function() {
                   )
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              this.loggedUser
+                ? _c("li", [_c("a", [_vm._v(_vm._s(_vm.loggedUser.name))])])
+                : _vm._e(),
+              _vm._v(" "),
+              this.loggedUser
+                ? _c(
+                    "li",
+                    {
+                      on: {
+                        click: function($event) {
+                          _vm.logout()
+                        }
+                      }
+                    },
+                    [_vm._m(1)]
+                  )
+                : _vm._e()
             ])
           ])
         ]
@@ -61799,7 +61856,7 @@ var render = function() {
                       staticClass: "menu-toggle hide-for-large",
                       on: { click: _vm.menuVisible }
                     },
-                    [_vm._m(1)]
+                    [_vm._m(2)]
                   )
                 ]),
                 _vm._v(" "),
@@ -61826,7 +61883,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _vm._m(3)
                 ])
               ])
             ])
@@ -61845,6 +61902,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h1", [_c("i", { staticClass: "el-icon-close" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", [
+      _c("i", { staticClass: "el-icon-back" }),
+      _vm._v(" "),
+      _c("span", [_vm._v("Logout")])
+    ])
   },
   function() {
     var _vm = this

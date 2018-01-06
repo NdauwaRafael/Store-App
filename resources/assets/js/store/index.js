@@ -34,8 +34,8 @@ const state = {
   error: false,
   loggedUser: {},
   loginError: false,
-  userLoggedin: false
-
+  userLoggedin: false,
+  logoutMsg:false
 }
 
 const getters = {
@@ -53,6 +53,9 @@ const getters = {
     },
     loginError: state => {
         return state.loginError
+    },
+    logoutMsg: state =>{
+      return state.logoutMsg
     }
 }
 
@@ -146,6 +149,14 @@ const mutations = {
             state.loginError = true;
         }
 
+    },
+    [types.LOGOUT_USER](types, logedUser){
+        const logedIn = state.loggedUser
+        if (logedIn){
+            state.loggedUser = {};
+            state.userLoggedin = false;
+            state.logoutMsg = true;
+        }
     }
 
   }
@@ -177,8 +188,11 @@ const actions = {
       },
       login({commit}, user){
           commit('LOGIN_USER', user)
-      }
+      },
 
+      logout({commit}, user){
+          commit('LOGOUT_USER', user)
+      }
 
 }
 

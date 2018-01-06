@@ -38,6 +38,15 @@
                 </router-link>
               </li>
 
+              <li v-if="this.loggedUser">
+                  <a>{{loggedUser.name}}</a>
+              </li>
+              <li v-if="this.loggedUser" @click="logout()">
+                      <a >
+                          <i class="el-icon-back"></i>
+                          <span>Logout</span>
+                      </a>
+              </li>
           </ul>
         </div>
 
@@ -87,14 +96,15 @@ export default {
       toggle: false,
       isVisible: false,
       showLarge: true,
-        isloggedin:false,
+      isloggedin:false,
       loggedin: {}
     }
   },
     computed: {
         ...mapGetters({
             userLoggedin: 'userLoggedin',
-            loggedUser: 'loggedUser'
+            loggedUser: 'loggedUser',
+            logoutMsg: 'logoutMsg'
         }),
 
     },
@@ -107,6 +117,20 @@ export default {
           if(!this.isloggedin){
               this.$router.push('/')
           }
+      },
+      logout(){
+          this.$store.dispatch('logout', this.loggedUser)
+              .then((responce)=>{
+                  if(this.logoutMsg){
+                      this.$message('You have successfully Logged Out!! Come back soon. We will miss you');
+                      this.$router.push('/')
+                  }else{
+                      this.$message.error('Oops, that was not supposed to happen. There is an error somewhere.');
+                  }
+              })
+              .catch((error)=>{
+
+          })
       }
   },
     mounted() {

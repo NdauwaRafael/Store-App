@@ -86,8 +86,7 @@
                   .catch((err)=>{
                       console.log(err)
                   })
-
-
+              
             // this.$router.push('/home');
             //this.$http.post(loginURL);
           },

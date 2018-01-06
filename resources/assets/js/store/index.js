@@ -6,7 +6,7 @@ import Vuex from 'vuex';
 import vuejsStorage from 'vuejs-storage'
 import updateItemInArray from 'array-update-item'
 import * as types from './mutation-types'
-import Login from './modules/login'
+
 
 Vue.use(Vuex);
 Vue.use(vuejsStorage);
@@ -14,25 +14,46 @@ Vue.use(vuejsStorage);
 const state = {
   storage: {
     storeItems:[],
+
   },
 
   basket: [],
   checkoutBasketList: [],
-
-  error: false
+    users: [
+        {
+            email: 'rkaranja@cytonn.com',
+            password: 'password',
+            name: 'Raphael Karanja'
+        },
+        {
+            email: 'jdoe@cytonn.com',
+            password: 'password',
+            name: 'John Doe'
+        }
+    ],
+  error: false,
+  loggedUser: {},
+  loginError: false,
+  userLoggedin: false
 
 }
 
 const getters = {
-storeItems:state =>{
-  return state.storage.storeItems;
-},
-
-basketlist: state => {
-  return state.basket
-
-}
-
+    storeItems:state =>{
+      return state.storage.storeItems;
+    },
+    basketlist: state => {
+      return state.basket
+    },
+    userLoggedin: state => {
+        return state.userLoggedin;
+    },
+    loggedUser: state => {
+        return state.loggedUser
+    },
+    loginError: state => {
+        return state.loginError
+    }
 }
 
 
@@ -104,7 +125,28 @@ const mutations = {
 
   [types.CLEAR_BASKET_LIST](type, basketlist){
     this.state.basket = [];
-  }
+  },
+
+    [types.LOGIN_USER](types, userDetails){
+        const email = userDetails.email;
+        const password = userDetails.password;
+        const userDirectory = state.users;
+
+        // const LogedUser = userDirectory.filter(user => user.email == email && user.password == password )
+        const LogedUser = userDirectory.find(function (LogedUser) { return LogedUser.email == email && LogedUser.password == password });
+
+        if(LogedUser){
+            state.loggedUser.email = email;
+            state.loggedUser.name = LogedUser.name;
+            state.loggedUser.token = 'hashedvalue'+LogedUser.email ;
+            state.userLoggedin = true;
+        }else {
+            state.loggedUser = {};
+            state.userLoggedin = false;
+            state.loginError = true;
+        }
+
+    }
 
   }
 
@@ -121,19 +163,21 @@ const actions = {
       removeItem({commit}, itm){
         commit('REMOVE_ITEM', itm)
       },
-
       addToBasket({ commit }, itm){
         commit(types.ADD_TO_BASKET, {
           id: itm.id
-    })
-  },
-  dispatchBasket({ commit }, basketlist){
-    commit(types.CHECKOUT_BASKET_LIST, basketlist)
-},
+        })
+        },
+      dispatchBasket({ commit }, basketlist){
+        commit(types.CHECKOUT_BASKET_LIST, basketlist)
+      },
 
-clearBasket({ commit }, basketlist){
-  commit(types.CLEAR_BASKET_LIST, basketlist)
-}
+      clearBasket({ commit }, basketlist){
+        commit(types.CLEAR_BASKET_LIST, basketlist)
+      },
+      login({commit}, user){
+          commit('LOGIN_USER', user)
+      }
 
 
 }
@@ -144,9 +188,7 @@ const store = new Vuex.Store({
   getters,
   actions,
   mutations,
-    modules: {
-        Login,
-    },
+
 
   plugins: [
   vuejsStorage({ namespace: 'store-items' })

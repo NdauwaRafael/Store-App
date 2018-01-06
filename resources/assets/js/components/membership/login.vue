@@ -54,9 +54,9 @@
               password: 'password',
               token: ''
             },
-              isloggedin:false,
-              isError: false,
-              loggedin: {}
+              loggedin: {},
+              isloggedin: false
+
           }
         },
           computed: {
@@ -74,10 +74,7 @@
                 console.log(this.token)
                   this.$store.dispatch('login', this.loginForm)
                       .then((res)=>{
-                          this.$message({
-                              message: 'Congrats, this is a success message.',
-                              type: 'success'
-                          });
+                        this.loginState()
                       })
                       .catch((er)=>{
 
@@ -86,27 +83,34 @@
                   .catch((err)=>{
                       console.log(err)
                   })
-              
+
             // this.$router.push('/home');
             //this.$http.post(loginURL);
           },
             loginState() {
-                if(this.isloggedin){
+              const status_l = this.userLoggedin;
+                if(status_l ){
                     this.$router.push('/home')
+                    console.log(this.isError)
+                    console.log(status_l + 'hhhhh' )
                 }else{
-                    if(this.isError) {
+                    console.log(status_l )
+                    if(this.loginError) {
                         this.$notify.error({
                             title: 'Login Error',
                             message: 'Failed to Login, please check your details and try again'
                         });
+
                     }
                 }
             }
         },
+        beforeMounted() {
+            this.loginState()
+        },
         mounted() {
             let status = this.userLoggedin;
             this.isloggedin = status;
-            this.isError = this.loginError
             this.loginState()
         },
         watch: {

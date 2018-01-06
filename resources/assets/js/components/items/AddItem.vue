@@ -19,8 +19,17 @@ return {
 },
   methods: {
     registerItem(){
-      this.$store.dispatch('addItem', this.items);
-      this.$router.push('/itemList')
+        if (this.items.name==''||this.items.category==''||this.items.quantity ==''|| this.items.price ==''||this.items.description==''){
+            this.$notify({
+                title: 'Empty Fields Warning',
+                message: 'Fill Out All the empty fields before submitting',
+                type: 'warning'
+            });
+        }else{
+            this.$store.dispatch('addItem', this.items);
+            this.$router.push('/itemList')
+        }
+
     }
   },
   computed: {

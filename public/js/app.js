@@ -62540,7 +62540,7 @@ exports = module.exports = __webpack_require__(39)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -62556,30 +62556,38 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'addItem',
+    name: 'addItem',
 
-  data: function data() {
+    data: function data() {
 
-    return {
-      items: {
-        name: '',
-        category: '',
-        quantity: '',
-        price: '',
-        description: ''
-      }
-    };
-  },
+        return {
+            items: {
+                name: '',
+                category: '',
+                quantity: '',
+                price: '',
+                description: ''
+            }
+        };
+    },
 
-  methods: {
-    registerItem: function registerItem() {
-      this.$store.dispatch('addItem', this.items);
-      this.$router.push('/itemList');
-    }
-  },
-  computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
-    storeItemsList: 'storeItems'
-  }))
+    methods: {
+        registerItem: function registerItem() {
+            if (this.items.name == '' || this.items.category == '' || this.items.quantity == '' || this.items.price == '' || this.items.description == '') {
+                this.$notify({
+                    title: 'Empty Fields Warning',
+                    message: 'Fill Out All the empty fields before submitting',
+                    type: 'warning'
+                });
+            } else {
+                this.$store.dispatch('addItem', this.items);
+                this.$router.push('/itemList');
+            }
+        }
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
+        storeItemsList: 'storeItems'
+    }))
 });
 
 /***/ }),
@@ -62867,19 +62875,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     updateItem: function updateItem() {
       var _this2 = this;
 
-      this.$store.dispatch('editItem', this.editItemsList, this.editItemsList.id).then(function (response) {
-        _this2.$message({
-          message: 'Item Updated Successfully',
-          type: 'success'
+      if (this.editItemsList.name == '' || this.editItemsList.category == '' || this.editItemsList.quantity == '' || this.editItemsList.price == '' || this.editItemsList.description == '') {
+        this.$notify({
+          title: 'Empty Fields Warning',
+          message: 'You cannot set fields to empty values. Fill out Empty fields before proceeding to save',
+          type: 'warning'
         });
-        _this2.innerVisible = false;
-        _this2.outerVisible = false;
-      }).then(function (response) {
-        // this.$router.replace('/dashboard')
-      }).catch(function (err) {
-        _this2.$message.error('Item Could not be updated Successfully');
-        console.log(err);
-      });
+      } else {
+        this.$store.dispatch('editItem', this.editItemsList, this.editItemsList.id).then(function (response) {
+          _this2.$message({
+            message: 'Item Updated Successfully',
+            type: 'success'
+          });
+          _this2.innerVisible = false;
+          _this2.outerVisible = false;
+        }).then(function (response) {
+          // this.$router.replace('/dashboard')
+        }).catch(function (err) {
+          _this2.$message.error('Item Could not be updated Successfully');
+          console.log(err);
+        });
+      }
     }
   },
   computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])({
@@ -63152,7 +63168,7 @@ var render = function() {
             },
             [
               _c("h3", [
-                _c("i", { staticClass: "el-icon-loading" }),
+                _c("small", [_c("i", { staticClass: "el-icon-loading" })]),
                 _vm._v(" Are you Sure you want to change the Item details?")
               ]),
               _vm._v(" "),

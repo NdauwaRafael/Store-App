@@ -54,24 +54,31 @@ import { mapGetters } from 'vuex'
       },
 
       updateItem(){
-        this.$store.dispatch('editItem', this.editItemsList, this.editItemsList.id)
-        .then((response)=>{
-          this.$message({
-            message: 'Item Updated Successfully',
-            type: 'success'
-          });
-          this.innerVisible = false;
-          this.outerVisible = false;
+          if (this.editItemsList.name==''||this.editItemsList.category==''||this.editItemsList.quantity ==''|| this.editItemsList.price ==''||this.editItemsList.description==''){
+              this.$notify({
+                  title: 'Empty Fields Warning',
+                  message: 'You cannot set fields to empty values. Fill out Empty fields before proceeding to save',
+                  type: 'warning'
+              });
+          }else {
+              this.$store.dispatch('editItem', this.editItemsList, this.editItemsList.id)
+                  .then((response) => {
+                      this.$message({
+                          message: 'Item Updated Successfully',
+                          type: 'success'
+                      });
+                      this.innerVisible = false;
+                      this.outerVisible = false;
 
-        })
-        .then((response)=>{
-          // this.$router.replace('/dashboard')
-        })
-        .catch((err)=>{
-          this.$message.error('Item Could not be updated Successfully');
-          console.log(err);
-        })
-
+                  })
+                  .then((response) => {
+                      // this.$router.replace('/dashboard')
+                  })
+                  .catch((err) => {
+                      this.$message.error('Item Could not be updated Successfully');
+                      console.log(err);
+                  })
+          }
       }
     },
     computed: {
@@ -166,7 +173,7 @@ import { mapGetters } from 'vuex'
           title="Inner Dialog"
           :visible.sync="innerVisible"
           append-to-body>
-          <h3><i class="el-icon-loading"></i> Are you Sure you want to change the Item details?</h3>
+          <h3><small><i class="el-icon-loading"></i></small> Are you Sure you want to change the Item details?</h3>
 
           <div slot="footer" class="dialog-footer">
             <el-button type="info" @click="innerVisible = false">Cancel</el-button>

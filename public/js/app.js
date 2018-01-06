@@ -61293,8 +61293,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             loginForm: {
-                email: 'rkaranja@cytonn.com',
-                password: 'password',
+                email: '',
+                password: '',
                 token: ''
             },
             loggedin: {},

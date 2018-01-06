@@ -50,8 +50,8 @@
         data(){
           return {
             loginForm: {
-              email: 'rkaranja@cytonn.com',
-              password: 'password',
+              email: '',
+              password: '',
               token: ''
             },
               loggedin: {},

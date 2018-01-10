@@ -6,6 +6,8 @@ import { mapGetters } from 'vuex'
       return {
         outerVisible: false,
         innerVisible: false,
+          deleteItemId: '',
+          DeleteItems: false,
           editItemsList: {
             name: '',
             category: '',
@@ -35,14 +37,14 @@ import { mapGetters } from 'vuex'
 
         this.outerVisible = true;
       },
-      handleDelete(index){
-        this.$store.dispatch('removeItem', index)
+      handleDelete(){
+        this.$store.dispatch('removeItem', this.deleteItemId)
         .then((response)=>{
           this.$message({
             message: 'Item Deleted Successfully',
             type: 'success'
           });
-
+            this.DeleteItems = false;
         })
         .then((response)=>{
           this.$router.replace('/itemList')
@@ -52,6 +54,10 @@ import { mapGetters } from 'vuex'
           console.log(err);
         })
       },
+        deleteNow(index){
+            this.deleteItemId = index;
+            this.DeleteItems = true;
+        },
 
       updateItem(){
           if (this.editItemsList.name==''||this.editItemsList.category==''||this.editItemsList.quantity ==''|| this.editItemsList.price ==''||this.editItemsList.description==''){
@@ -118,7 +124,7 @@ import { mapGetters } from 'vuex'
           <td>{{item.quantity}}</td>
           <td>{{item.price}}</td>
           <td><el-button plain @click="handleEdit(index, item)">Edit </el-button></td>
-          <td><el-button plain type="danger" @click="handleDelete(index)">Delete</el-button></td>
+          <td><el-button plain type="danger" @click="deleteNow(index)">Delete</el-button></td>
         </tr>
       </tbody>
     </table>
@@ -183,6 +189,23 @@ import { mapGetters } from 'vuex'
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">Cancel</el-button>
         <el-button type="success" @click="innerVisible = true">Update Item Details</el-button>
+      </div>
+    </el-dialog>
+
+
+    <el-dialog
+            width="30%"
+            title="Inner Dialog"
+            :visible.sync="DeleteItems"
+            append-to-body>
+            <h3>
+              <small><i class="el-icon-loading"></i></small>
+              Are you Sure you want to Delete this Item?
+            </h3>
+
+      <div slot="footer" class="dialog-footer">
+        <el-button type="info" @click="DeleteItems = false">Cancel</el-button>
+        <el-button type="danger" @click="handleDelete(index)">Delete Now</el-button>
       </div>
     </el-dialog>
   </div>

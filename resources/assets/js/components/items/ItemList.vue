@@ -195,13 +195,13 @@ import { mapGetters } from 'vuex'
 
     <el-dialog
             width="30%"
-            title="Inner Dialog"
+            title="Item Deletion Confirmation!!"
             :visible.sync="DeleteItems"
             append-to-body>
-            <h3>
+            <h4>
               <small><i class="el-icon-loading"></i></small>
               Are you Sure you want to Delete this Item?
-            </h3>
+            </h4>
 
       <div slot="footer" class="dialog-footer">
         <el-button type="info" @click="DeleteItems = false">Cancel</el-button>

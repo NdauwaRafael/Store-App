@@ -44,6 +44,7 @@
               <tr>
                 <th>Item Name</th>
                 <th>Item Quantity</th>
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -51,6 +52,7 @@
               <tr v-for="basketItem in basketItems">
                 <td>{{basketItem.basket_item_name}}</td>
                 <td>{{basketItem.basket_item_quantity}}</td>
+                <td><el-button type="info" size="small" @click="innerVisible = true">edit</el-button></td>
               </tr>
             </tbody>
           </table>

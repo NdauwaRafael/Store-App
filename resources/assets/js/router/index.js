@@ -6,6 +6,7 @@ import Home from '../components/home/home'
 import Dashboard from '../components/home/Dashboard'
 import AddItem from '../components/items/AddItem.vue'
 import ItemList from '../components/items/ItemList.vue'
+import Managers from '../components/managers/managers.vue'
 import Store from '../components/home/test.vue'
 Vue.use(VueRouter);
 
@@ -44,8 +45,9 @@ const router = new VueRouter({
                 name: 'Dashboard'
               },
               {
-                  path: '/test',
-                  component: Store
+                  path: '/managers',
+                  component: Managers,
+                  name: 'managers'
               }
           ]
       }

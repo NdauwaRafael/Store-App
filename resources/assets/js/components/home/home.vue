@@ -38,8 +38,20 @@
                 </router-link>
               </li>
 
-              <li v-if="this.loggedUser">
+              <li v-if="userCategory == 'admin'">
+                  <router-link :to="{ name: 'managers'}">
+                      <a>
+                          <i class="el-icon-circle-plus"></i>
+                          <span>Store Managers</span>
+                      </a>
+                  </router-link>
+              </li>
+
+              <li v-if="userCategory == 'admin'">
                   <a>{{loggedUser.name}}</a>
+              </li>
+              <li v-if="userCategory == 'manager'">
+                  <a>{{loggedManager.managerName}}</a>
               </li>
               <li v-if="this.loggedUser" @click="logout()">
                       <a >
@@ -104,7 +116,9 @@ export default {
         ...mapGetters({
             userLoggedin: 'userLoggedin',
             loggedUser: 'loggedUser',
-            logoutMsg: 'logoutMsg'
+            logoutMsg: 'logoutMsg',
+            userCategory: 'userCategory',
+            loggedManager: 'loggedManager'
         }),
 
     },

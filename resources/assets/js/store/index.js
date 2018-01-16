@@ -23,19 +23,47 @@ const state = {
         {
             email: 'rkaranja@cytonn.com',
             password: 'password',
-            name: 'Raphael Karanja'
+            name: 'Raphael Karanja',
+            role: 'admin'
         },
         {
             email: 'jdoe@cytonn.com',
             password: 'password',
-            name: 'John Doe'
+            name: 'John Doe',
+            role: 'admin'
         }
     ],
+    storeManagers: [
+
+    ],
+    offices: [
+        {
+            officeName: 'Fedha Plaza',
+            officeId: '1'
+        },
+        {
+            officeName: 'Chancery',
+            officeId: '2'
+        },
+        {
+            officeName: 'Alma',
+            officeId: '3'
+        },
+        {
+            officeName: 'Liason',
+            officeId: '4'
+        }
+    ],
+
   error: false,
   loggedUser: {},
+  loggedManager: {},
   loginError: false,
   userLoggedin: false,
-  logoutMsg:false
+  logoutMsg:false,
+  managerAddedError: false,
+  managerAddedSuccess: false,
+  userCategory: ''
 }
 
 const getters = {
@@ -51,11 +79,29 @@ const getters = {
     loggedUser: state => {
         return state.loggedUser
     },
+    loggedManager: state => {
+        return state.loggedManager
+    },
     loginError: state => {
         return state.loginError
     },
     logoutMsg: state =>{
       return state.logoutMsg
+    },
+    offices: state => {
+       return state.offices;
+    },
+    storeManagers: state => {
+        return state.storeManagers
+    },
+    managerAddedSuccess: state => {
+        return state.managerAddedSuccess
+    },
+    managerAddedError: state => {
+        return state.managerAddedError
+    },
+    userCategory: state => {
+        return state.userCategory
     }
 }
 
@@ -137,14 +183,22 @@ const mutations = {
 
         // const LogedUser = userDirectory.filter(user => user.email == email && user.password == password )
         const LogedUser = userDirectory.find(function (LogedUser) { return LogedUser.email == email && LogedUser.password == password });
-
+        const LoggedManager = state.storeManagers.find(function (LoggedManager) { return LoggedManager.managerEmail == userDetails.email && LoggedManager.managerPassword == userDetails.password  });
+        console.log(userDetails)
         if(LogedUser){
             state.loggedUser.email = email;
             state.loggedUser.name = LogedUser.name;
             state.loggedUser.token = 'hashedvalue'+LogedUser.email ;
             state.userLoggedin = true;
-        }else {
+            state.userCategory = 'admin'
+        }else if(LoggedManager){
+            state.loggedManager.managerEmail = userDetails.email;
+            state.loggedManager.managerName = LoggedManager.managerName;
+            state.userLoggedin = true;
+            state.userCategory = 'manager'
+        }else{
             state.loggedUser = {};
+            state.loggedManager = {};
             state.userLoggedin = false;
             state.loginError = true;
         }
@@ -156,6 +210,22 @@ const mutations = {
             state.loggedUser = {};
             state.userLoggedin = false;
             state.logoutMsg = true;
+        }
+    },
+
+    /*@==============================
+        MANAGER
+    ====================================@*/
+    [types.ADD_MANAGER](types, manager){
+        // this.state.storeManagers.push(manager);
+        const mngerAvailable = state.storeManagers.find(mng => mng.managerEmail ===manager.managerEmail);
+        if (!mngerAvailable){
+            this.state.storeManagers.push(manager);
+            this.state.managerAddedSuccess = true;
+            this.state.managerAddedError = false;
+        }else{
+            this.state.managerAddedError = true;
+            this.state.managerAddedSuccess = false;
         }
     }
 
@@ -192,8 +262,11 @@ const actions = {
 
       logout({commit}, user){
           commit('LOGOUT_USER', user)
-      }
+      },
 
+    addManager({commit}, manager){
+          commit('ADD_MANAGER', manager)
+    }
 }
 
 

@@ -1,3 +1,144 @@
+<script>
+    import { mapGetters, mapActions } from 'vuex'
+    export default {
+        name: "Dashboard",
+        data(){
+            return {
+                basketlist: {
+                    name: '',
+                    category: '',
+                    quantity: '',
+                    price: '',
+                    description: '',
+                    id: ''
+                },
+                itemsnotavailable: true,
+                itemsavailable: false,
+                waiting: true,
+                hasError: false,
+                editItem: false
+
+            }
+        },
+
+        props: ['tCart'],
+
+        computed: {
+            ...mapGetters({
+                storeItemsList: 'storeItems',
+                basketItems: 'basketlist'
+            })
+        },
+
+
+
+        methods: {
+            cart(id, item){
+                this.itemsnotavailable = false
+                this.itemsavailable = true
+
+                this.basketlist.name = item.name;
+                this.basketlist.category = item.category;
+                this.basketlist.quantity = item.quantity;
+                this.basketlist.price = item.price;
+                this.basketlist.description = item.description;
+                this.basketlist.id = id;
+
+
+                this.$store.dispatch('addToBasket', this.basketlist)
+                    .then((response)=>{
+                        this.hasError = this.$store.state.error;
+                        if (this.hasError) {
+                            this.$notify({
+                                title: 'Warning',
+                                message: 'Sorry But You cannot Add any more of this item to the store. IT SEEM WE RAN OUT OF STOCK',
+                                type: 'warning'
+                            });
+                        }else{
+                            this.hasError = false
+                            this.$message({
+                                message: 'Item Added to the Basket',
+                                type: 'success'
+                            });
+
+                        }
+
+
+                    })
+                    .catch((err)=>{
+                        this.$message.error('Opps!! That was not supposed to happen');
+                        console.log(err);
+                    })
+
+
+            },
+
+            toggleCart(){
+                this.itemsnotavailable = !this.itemsnotavailable
+                this.itemsavailable = !this.itemsavailable
+                console.log(this.itemsavailable);
+            },
+            removeItemBasket(id){
+                this.$store.dispatch('removeItemBasket', id)
+                    .then((response)=>{
+                        this.$message({
+                        message: 'Congrats, this is a success message.',
+                        type: 'success'
+                    });
+                    },
+                ()=>{
+                    this.$message.error('Oops, cannot remove this item.');
+                })
+            },
+            checkoutBasketList(){
+                const items = this.basketItems
+                if (items.length == 0) {
+                    this.$notify.error({
+                        title: 'Error',
+                        message: 'Add Items To the cart First before Checking Out'
+                    });
+
+                }else{
+                    this.$store.dispatch('dispatchBasket', items)
+                        .then((response)=>{
+                            this.waiting = !this.waiting
+                        })
+                        .then((response)=>{
+                            this.$notify({
+                                title: 'Success',
+                                message: 'You have Successfully Checked Out Item Basket!!',
+                                type: 'success'
+                            });
+                        })
+                        .catch((err)=>{
+                            this.$message.error('Opps!! That was not supposed to happen');
+                            console.log(err);
+                        })
+                        .finally(()=> {
+                            this.waiting = !this.waiting
+                        });
+                }
+
+            },
+
+            clearBasketList(){
+                const items = this.basketItems;
+                this.itemsnotavailable = !this.itemsnotavailable
+                this.itemsavailable = !this.itemsavailable
+                this.$store.dispatch('clearBasket', items)
+                    .then((response)=>{
+                        this.$notify.info({
+                            title: 'BASKET NOTIFICATION',
+                            message: 'Basket Items has been cleared, You can always add some more you know'
+                        });
+                    })
+                    .catch((error)=>{
+
+                    })
+            }
+        }
+    }
+</script>
 <template >
   <div class="dashboard-component">
     <div class="dashboard-nav">
@@ -52,7 +193,7 @@
               <tr v-for="basketItem in basketItems">
                 <td>{{basketItem.basket_item_name}}</td>
                 <td>{{basketItem.basket_item_quantity}}</td>
-                <td><el-button type="info" size="small" @click="innerVisible = true">edit</el-button></td>
+                <td><i class="el-icon-delete " @click="removeItemBasket(basketItem.id)"></i></td>
               </tr>
             </tbody>
           </table>
@@ -65,142 +206,14 @@
         </div>
 
     </div>
+
+
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
-  name: "Dashboard",
-  data(){
-    return {
-      basketlist: {
-        name: '',
-        category: '',
-        quantity: '',
-        price: '',
-        description: '',
-        id: ''
-      },
-      itemsnotavailable: true,
-      itemsavailable: false,
-      waiting: true,
-      hasError: false
-    }
-  },
-
-  props: ['tCart'],
-
-  computed: {
-    ...mapGetters({
-      storeItemsList: 'storeItems',
-      basketItems: 'basketlist'
-    })
-  },
-
-
-
-  methods: {
-    cart(id, item){
-      this.itemsnotavailable = false
-      this.itemsavailable = true
-
-      this.basketlist.name = item.name;
-      this.basketlist.category = item.category;
-      this.basketlist.quantity = item.quantity;
-      this.basketlist.price = item.price;
-      this.basketlist.description = item.description;
-      this.basketlist.id = id;
-
-
-      this.$store.dispatch('addToBasket', this.basketlist)
-      .then((response)=>{
-        this.hasError = this.$store.state.error;
-        if (this.hasError) {
-          this.$notify({
-            title: 'Warning',
-            message: 'Sorry But You cannot Add any more of this item to the store. IT SEEM WE RAN OUT OF STOCK',
-            type: 'warning'
-          });
-        }else{
-          this.hasError = false
-          this.$message({
-            message: 'Item Added to the Basket',
-            type: 'success'
-          });
-
-        }
-
-
-      })
-      .catch((err)=>{
-        this.$message.error('Opps!! That was not supposed to happen');
-        console.log(err);
-      })
-
-
-    },
-
-    toggleCart(){
-        this.itemsnotavailable = !this.itemsnotavailable
-        this.itemsavailable = !this.itemsavailable
-        console.log(this.itemsavailable);
-    },
-    // ...mapActions([
-    //   'addToBasket'
-    // 'You cannot Checkout More Items Than The store has'
-    // ])
-
-    checkoutBasketList(){
-      const items = this.basketItems
-      if (items.length == 0) {
-        this.$notify.error({
-          title: 'Error',
-          message: 'Add Items To the cart First before Checking Out'
-        });
-
-      }else{
-        this.$store.dispatch('dispatchBasket', items)
-        .then((response)=>{
-          this.waiting = !this.waiting
-        })
-        .then((response)=>{
-          this.$notify({
-            title: 'Success',
-            message: 'You have Successfully Checked Out Item Basket!!',
-            type: 'success'
-          });
-        })
-        .catch((err)=>{
-          this.$message.error('Opps!! That was not supposed to happen');
-          console.log(err);
-        })
-        .finally(()=> {
-           this.waiting = !this.waiting
-         });
-      }
-
-    },
-
-    clearBasketList(){
-      const items = this.basketItems;
-      this.itemsnotavailable = !this.itemsnotavailable
-      this.itemsavailable = !this.itemsavailable
-      this.$store.dispatch('clearBasket', items)
-      .then((response)=>{
-        this.$notify.info({
-          title: 'BASKET NOTIFICATION',
-          message: 'Basket Items has been cleared, You can always add some more you know'
-        });
-      })
-      .catch((error)=>{
-
-      })
-    }
+<style scoped>
+  .el-icon-delete {
+    color: #761c19;
+    cursor: pointer;
   }
-}
-</script>
-
-<style >
-
 </style>

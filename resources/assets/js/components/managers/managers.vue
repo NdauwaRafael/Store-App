@@ -57,9 +57,15 @@
                 }
             },
             deleteManager(email){
-                this.$notify.error({
-                    title: 'Pending.......',
-                    message: `Wait, Delete is not yet enabled!!`,
+                this.$store.dispatch('deleteManager', email)
+                    .then((resp)=>{
+                        this.$message('deleted successfully!!')
+                    },
+                    ()=>{
+                    this.$notify.error({
+                        title: 'Pending.hh......',
+                        message: `Wait, Delete is not yet enabled!!`,
+                    });
                 });
             }
         }

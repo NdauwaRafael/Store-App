@@ -5,6 +5,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import vuejsStorage from 'vuejs-storage'
 import updateItemInArray from 'array-update-item'
+import managers from './modules/managers'
 import * as types from './mutation-types'
 
 
@@ -175,7 +176,18 @@ const mutations = {
   [types.CLEAR_BASKET_LIST](type, basketlist){
     this.state.basket = [];
   },
+  [types.REMOVE_ITEM_BASKET](types, id){
+      const basketitem = state.basket.find(item => item.id ===id);
+      const position = this.state.basket.indexOf(basketitem);
 
+      if(basketitem.basket_item_quantity > 1){
+            basketitem.basket_item_quantity--;
+      }else{
+          if (position > -1) {
+              this.state.basket.splice(position, 1);
+          }
+      }
+  } ,
     [types.LOGIN_USER](types, userDetails){
         const email = userDetails.email;
         const password = userDetails.password;
@@ -244,6 +256,9 @@ const actions = {
       removeItem({commit}, itm){
         commit('REMOVE_ITEM', itm)
       },
+        removeItemBasket({commit}, itm){
+            commit('REMOVE_ITEM_BASKET', itm)
+        },
       addToBasket({ commit }, itm){
         commit(types.ADD_TO_BASKET, {
           id: itm.id
@@ -275,8 +290,9 @@ const store = new Vuex.Store({
   getters,
   actions,
   mutations,
-
-
+  modules: {
+      managers,
+  },
   plugins: [
   vuejsStorage({ namespace: 'store-items' })
 ]

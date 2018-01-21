@@ -22,6 +22,7 @@
     "dependencies": {
         "array-update-item": "^0.1.2",
         "element-ui": "^2.0.8",
+        "font-awesome": "^4.7.0",
         "router-view": "^1.1.7",
         "vue-authenticate": "^1.3.4",
         "vue-resource": "^1.3.5",

@@ -144,7 +144,7 @@
     <div class="dashboard-nav">
       <div class="grid-container">
         <div class="settings" @click="toggleCart()">
-          <i class="el-icon-goods"></i> <small>Item Basket</small>
+          <i class="fa fa-shopping-basket" aria-hidden="true"></i> <small> Item Basket <span v-if="basketItems.length"><el-tag type="info">({{basketItems.length}})</el-tag></span> <i class="fa fa-hand-o-left" aria-hidden="true"></i></small>
         </div>
       </div>
     </div>

@@ -62398,7 +62398,7 @@ var render = function() {
           staticClass: "item-list",
           class: {
             "large-12": _vm.itemsnotavailable,
-            "large-8": _vm.itemsavailable
+            "large-7": _vm.itemsavailable
           }
         },
         [
@@ -62453,13 +62453,34 @@ var render = function() {
         {
           staticClass: "basket",
           class: {
-            "large-3": _vm.itemsavailable,
+            "large-4": _vm.itemsavailable,
             cartHidden: _vm.itemsnotavailable
           }
         },
         [
           _c("table", [
-            _vm._m(1),
+            _c("thead", [
+              _c("tr", [
+                _c("th", [_vm._v("Item Name")]),
+                _vm._v(" "),
+                _c("th", [
+                  _vm._v("Item Quantity "),
+                  _vm.basketItems.length
+                    ? _c(
+                        "span",
+                        [
+                          _c("el-tag", { attrs: { type: "success" } }, [
+                            _vm._v("(" + _vm._s(_vm.basketItems.length) + ")")
+                          ])
+                        ],
+                        1
+                      )
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Action")])
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "tbody",
@@ -62541,21 +62562,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Item Category")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Item Quantity")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Action")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Item Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Item Quantity")]),
+        _c("th", [_vm._v("Item Quantity  ")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
       ])

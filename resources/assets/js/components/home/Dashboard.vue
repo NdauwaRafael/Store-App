@@ -149,7 +149,7 @@
       </div>
     </div>
     <div class="grid-x">
-        <div class="item-list" v-bind:class = "{'large-12': itemsnotavailable, 'large-8': itemsavailable }">
+        <div class="item-list" v-bind:class = "{'large-12': itemsnotavailable, 'large-7': itemsavailable }">
           <table>
               <thead>
                 <!-- <tr v-for="items of storeItemsList">
@@ -160,7 +160,7 @@
                   <th>#</th>
                   <th>Item Name</th>
                   <th>Item Category</th>
-                  <th>Item Quantity</th>
+                  <th>Item Quantity  </th>
                   <th>Action</th>
                 </tr>
               </thead>
@@ -177,14 +177,14 @@
             </table>
         </div>
 
-        <div class="basket" v-bind:class = "{ 'large-3': itemsavailable, 'cartHidden':itemsnotavailable }">
+        <div class="basket" v-bind:class = "{ 'large-4': itemsavailable, 'cartHidden':itemsnotavailable }">
 
 
           <table>
             <thead>
               <tr>
                 <th>Item Name</th>
-                <th>Item Quantity</th>
+                <th>Item Quantity <span v-if="basketItems.length"><el-tag type="success">({{basketItems.length}})</el-tag></span></th>
                 <th>Action</th>
               </tr>
             </thead>
